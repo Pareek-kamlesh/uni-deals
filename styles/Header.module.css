@@ -1,0 +1,87 @@
+
+
+.header {
+    background: linear-gradient(90deg, rgb(64, 67, 70) 0%, rgba(138, 153, 169, 0.7) 100%);
+    padding: 1px 0;
+    border-radius: 1px;
+    border-bottom: 2px solid rgba(0, 0, 0, 0.1);
+    color: white;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    position: fixed; /* Fixes the header at the top */
+    width: 100%; /* Ensures the header spans the full width */
+    top: 0; /* Aligns the header to the top of the viewport */
+    left: 0; /* Aligns the header to the left of the viewport */
+  }
+  
+  .nav {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+  }
+  
+  .navList {
+    list-style: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .navItem {
+    position: relative;
+  }
+  
+  .navLink {
+    color: white;
+    text-decoration: none;
+    font-size: x-large;
+    padding: 10px 15px;
+    transition: background 0.3s, color 0.3s;
+  }
+  
+  .navLink:hover {
+    background: rgba(255, 255, 255, 0.2);
+    color: #f8f9fa;
+    border-radius: 5px;
+  }
+  
+  .usernameButton {
+    background: rgba(255, 255, 255, 0.1);
+    border: none;
+    color: white;
+    font-size: 1.2rem;
+    cursor: pointer;
+    padding: 10px 15px;
+    border-radius: 50%;
+    transition: background 0.3s;
+  }
+  
+  .usernameButton:hover {
+    background: rgba(255, 255, 255, 0.2);
+  }
+  
+  .menu {
+    display: none; /* Hide menu by default */
+    position: absolute;
+    top: 100%; /* Below the button */
+    left: 0;
+    background: #444;
+    border-radius: 5px;
+    padding: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    white-space: nowrap; /* Prevent text wrapping */
+  }
+  
+  .usernameMenu:hover .menu {
+    display: inline-block; /* Show menu on hover */
+  }
+  
+  .menuLink {
+    color: white;
+    padding: 5px 10px;
+    text-decoration: none;
+    display: block; /* Block for full-width links */
+  }
+  
+  .menuLink:hover {
+    background: #555;
+  }
