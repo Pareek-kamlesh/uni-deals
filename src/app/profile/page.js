@@ -2,11 +2,11 @@
 
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import styles from '../../../styles/ProfilePage.module.css'; // Ensure this path is correct
+import styles from '../../../styles/ProfilePage.module.css';
 
 export default function ProfilePage() {
   const [userDetails, setUserDetails] = useState(null);
-  const [items, setItems] = useState([]); // Initialize with an empty array
+  const [items, setItems] = useState([]);
   const router = useRouter();
 
   useEffect(() => {
@@ -24,19 +24,21 @@ export default function ProfilePage() {
         .then((data) => {
           if (data.username) {
             setUserDetails({ username: data.username });
+            
+            // Fetch items uploaded by the user
+            fetch('/api/items/user-items', {
+              method: 'GET',
+              headers: { Authorization: `Bearer ${token}` },
+            })
+              .then((res) => res.json())
+              .then((data) => {
+                setItems(data || []);
+              })
+              .catch((error) => console.error('Failed to fetch items:', error));
           } else {
             router.push('/login');
           }
         });
-
-      // Fetch items uploaded by the user
-      fetch('/api/items', {
-        method: 'GET',
-        headers: { Authorization: `Bearer ${token}` },
-      })
-        .then((res) => res.json())
-        .then((data) => setItems(data.items || [])) // Ensure items is set to an array
-        .catch((error) => console.error('Failed to fetch items:', error));
     }
   }, [router]);
 
@@ -50,7 +52,7 @@ export default function ProfilePage() {
 
     if (res.ok) {
       alert('Item deleted successfully');
-      setItems(items.filter((item) => item._id !== itemId)); // Remove item from local state
+      setItems(items.filter((item) => item._id !== itemId));
     } else {
       console.error('Failed to delete item');
     }
@@ -58,15 +60,16 @@ export default function ProfilePage() {
 
   return (
     <div className={styles.container}>
-      <h1 className={styles.title}>Profile</h1>
-      <p className={styles.text}>Username: {userDetails?.username}</p>
-      <button onClick={() => router.push('/add-item')} className={styles.addItemButton}>
-        Add New Item
-      </button>
+      <div className={styles.header}>
+        <h1 className={styles.title}>Profile</h1>
+        <button onClick={() => router.push('/add-item')} className={styles.addItemButton}>
+          Add New Item
+        </button>
+      </div>
       <h2 className={styles.itemsTitle}>Your Items</h2>
       <div className={styles.itemsList}>
         {items.length === 0 ? (
-          <p>No items found</p>
+          <p className={styles.noItemsMessage}>No items found</p>
         ) : (
           items.map((item) => (
             <div key={item._id} className={styles.itemCard}>

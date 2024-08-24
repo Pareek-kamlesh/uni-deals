@@ -1,108 +1,131 @@
-/* ProfilePage.module.css */
-
+/* General container styling */
 .container {
-  max-width: 800px;
-  margin: 0 auto;
-  padding: 20px;
-  border-radius: 10px;
-  background-color: #ffffff;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  font-family: Arial, sans-serif;
+  padding: 2rem;
+  max-width: 1200px;
+  margin: 0 auto; /* Center container horizontally */
+  font-family: 'Roboto', sans-serif;
 }
 
+/* Flexbox container for title and button */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 4rem; /* Add space below the header */
+}
+
+/* Profile title styling */
 .title {
-  font-size: 2rem;
-  margin-bottom: 20px;
-  color: #333;
-  text-align: center;
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #2c3e50;
+  margin: 0; /* Remove margin */
 }
 
-.text {
-  font-size: 1.2rem;
-  color: #555;
-  text-align: center;
-}
-
+/* Add New Item button styling */
 .addItemButton {
-  display: block;
-  margin: 20px auto;
-  padding: 12px 20px;
+  padding: 0.75rem 1.5rem;
   border: none;
   border-radius: 5px;
-  background-color: #0070f3;
-  color: #ffffff;
+  background-color: #3498db;
+  color: #fff;
   font-size: 1rem;
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  transition: background-color 0.3s ease, transform 0.3s ease;
 }
 
 .addItemButton:hover {
-  background-color: #005bb5;
+  background-color: #2980b9;
+  transform: scale(1.05);
 }
 
+/* Items section title styling */
 .itemsTitle {
-  font-size: 1.5rem;
-  margin-top: 40px;
-  margin-bottom: 20px;
-  color: #333;
+  font-size: 2rem;
+  font-weight: 600;
+  color: #2c3e50;
+  margin: 1rem 0; /* Add vertical margin */
   text-align: center;
 }
 
+/* Container for item cards */
 .itemsList {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 20px;
-  justify-content: center;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1.5rem;
 }
 
+/* Individual item card styling */
 .itemCard {
-  background-color: #f9f9f9;
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  width: 300px;
-  padding: 20px;
-  box-sizing: border-box;
+  border: 1px solid #ecf0f1;
+  border-radius: 10px;
+  overflow: hidden;
+  background-color: #fff;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
+.itemCard:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+}
+
+/* Item image styling */
 .itemImage {
   width: 100%;
-  height: auto;
-  border-radius: 8px;
+  height: 200px;
+  object-fit: cover;
+  border-bottom: 1px solid #ecf0f1;
 }
 
+/* Item details section styling */
 .itemDetails {
-  margin-top: 10px;
+  padding: 1rem;
 }
 
+/* Item name styling */
 .itemName {
-  font-size: 1.2rem;
-  margin: 10px 0;
-  color: #333;
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: #2c3e50;
+  margin: 0; /* Remove margin */
 }
 
+/* Item description styling */
 .itemDescription {
   font-size: 1rem;
-  color: #555;
+  color: #7f8c8d;
+  margin: 0; /* Remove margin */
 }
 
+/* Item price styling */
 .itemPrice {
   font-size: 1.2rem;
-  font-weight: bold;
-  color: #333;
+  color: #e74c3c;
+  margin: 1rem 0; /* Add vertical margin */
 }
 
+/* Delete button styling */
 .deleteButton {
-  margin-top: 10px;
-  padding: 10px 15px;
+  width: 100%;
+  padding: 0.75rem;
   border: none;
   border-radius: 5px;
-  background-color: #e53e3e;
-  color: #ffffff;
+  background-color: #e74c3c;
+  color: #fff;
   font-size: 1rem;
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  transition: background-color 0.3s ease, transform 0.3s ease;
 }
 
 .deleteButton:hover {
-  background-color: #c53030;
+  background-color: #c0392b;
+  transform: scale(1.05);
+}
+
+/* No items found message styling */
+.noItemsMessage {
+  font-size: 1.2rem;
+  color: #95a5a6;
+  text-align: center;
 }
