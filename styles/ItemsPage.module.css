@@ -1,0 +1,96 @@
+/* ItemsPage.module.css */
+
+.container {
+  padding: 20px;
+  background-color: #f9f9f9;
+}
+
+.addItemButton {
+  display: inline-block;
+  padding: 10px 20px;
+  margin-bottom: 20px;
+  font-size: 1rem;
+  color: #fff;
+  background-color: #0070f3;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.addItemButton:hover {
+  background-color: #005bb5;
+}
+
+.itemGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* Ensure 3 columns */
+  gap: 20px;
+}
+
+.itemCard {
+  background-color: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  padding-bottom: 15px;
+}
+
+.itemCard:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.itemImage {
+  width: 100%;
+  height: 200px;
+  object-fit: contain;
+  border-bottom: 2px solid #e0e0e0;
+}
+
+.itemName {
+  font-size: 1.5rem;
+  color: #333;
+  margin: 10px 15px;
+}
+
+.itemDescription {
+  font-size: 1rem;
+  color: #666;
+  margin: 0 15px;
+  height: 60px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.itemPrice {
+  font-size: 1.25rem;
+  color: #ff6f61;
+  margin: 15px;
+  font-weight: bold;
+}
+
+.viewDetailsButton {
+  display: inline-block;
+  padding: 10px 15px;
+  font-size: 1rem;
+  color: #fff;
+  background-color: #28a745;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-top: 10px;
+  margin-left: 15px;
+}
+
+.viewDetailsButton:hover {
+  background-color: #218838;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .itemCard:hover .itemImage {
+      filter: brightness(90%);
+  }
+}

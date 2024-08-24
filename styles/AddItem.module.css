@@ -1,0 +1,70 @@
+/* AddItem.module.css */
+
+.container {
+    max-width: 700px;
+    margin: 0 auto;
+    padding: 20px;
+    border-radius: 10px;
+    background-color: #ffffff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    font-family: Arial, sans-serif;
+  }
+  
+  .title {
+    font-size: 2rem;
+    margin-bottom: 20px;
+    color: #333;
+    text-align: center;
+  }
+  
+  .form {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .label {
+    margin-bottom: 15px;
+  }
+  
+  .labelText {
+    display: block;
+    margin-bottom: 5px;
+    font-size: 1.1rem;
+    color: #555;
+  }
+  
+  .input, .textarea {
+    width: 100%;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+    box-sizing: border-box;
+    font-size: 1rem;
+    color: #333;
+  }
+  
+  .textarea {
+    resize: vertical;
+    min-height: 100px;
+  }
+  
+  .button {
+    padding: 12px 20px;
+    border: none;
+    border-radius: 5px;
+    background-color: #0070f3;
+    color: #ffffff;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-top: 20px;
+  }
+  
+  .button:hover {
+    background-color: #005bb5;
+  }
+  
+  .button:focus {
+    outline: none;
+  }
+  

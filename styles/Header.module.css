@@ -1,17 +1,24 @@
 
 
+
+
 .header {
-    background: linear-gradient(90deg, rgb(64, 67, 70) 0%, rgba(138, 153, 169, 0.7) 100%);
-    padding: 1px 0;
-    border-radius: 1px;
-    border-bottom: 2px solid rgba(0, 0, 0, 0.1);
-    color: white;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    position: fixed; /* Fixes the header at the top */
-    width: 100%; /* Ensures the header spans the full width */
-    top: 0; /* Aligns the header to the top of the viewport */
-    left: 0; /* Aligns the header to the left of the viewport */
-  }
+  background: linear-gradient(90deg, rgb(64, 67, 70) 0%, rgba(138, 153, 169, 0.7) 100%);
+  padding: 1px 0;
+  border-radius: 1px;
+  border-bottom: 2px solid rgba(0, 0, 0, 0.1);
+  color: white;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  position: fixed; /* Fixes the header at the top */
+  width: 100%; /* Ensures the header spans the full width */
+  top: 0; /* Aligns the header to the top of the viewport */
+  left: 0; /* Aligns the header to the left of the viewport */
+  z-index: 1000; /* Ensures the header is above other content */
+}
+
+
+
+
   
   .nav {
     max-width: 1200px;
