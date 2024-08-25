@@ -9,6 +9,14 @@ export default function ItemsPage() {
   const router = useRouter();
 
   useEffect(() => {
+    const token = localStorage.getItem('token');
+
+    if (!token) {
+      router.push('/login');
+    } 
+  }, [router]);
+
+  useEffect(() => {
     async function fetchItems() {
       const res = await fetch('/api/items');
       if (res.ok) {

@@ -9,6 +9,14 @@ export default function ChangePasswordPage() {
   const [newPassword, setNewPassword] = useState('');
   const router = useRouter();
 
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+
+    if (!token) {
+      router.push('/login');
+    } 
+  }, [router]);
+
   const handleChangePassword = async (e) => {
     e.preventDefault();
     const token = localStorage.getItem('token');

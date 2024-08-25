@@ -10,6 +10,14 @@ export default function RegisterPage() {
   const [username, setUsername] = useState('');
   const router = useRouter();
 
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+
+    if (token) {
+      router.push('/');
+    } 
+  }, [router]);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (password !== confirmPassword) {

@@ -1,5 +1,5 @@
 'use client';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import styles from '../../../styles/LoginPage.module.css'; // Import CSS module
 import { useRouter } from 'next/navigation';
 
@@ -7,6 +7,14 @@ export default function LoginPage() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const router = useRouter();
+
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+
+    if (token) {
+      router.push('/');
+    } 
+  }, [router]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();

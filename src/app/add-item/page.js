@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import styles from '../../../styles/AddItem.module.css'; // Adjust path as needed
 
@@ -10,6 +10,13 @@ export default function AddItem() {
   const [price, setPrice] = useState('');
   const [image, setImage] = useState('');
   const router = useRouter();
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+
+    if (!token) {
+      router.push('/login');
+    } 
+  }, [router]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
