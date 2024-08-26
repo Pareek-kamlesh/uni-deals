@@ -1,10 +1,11 @@
-import dbConnect from '../../../../lib/mongoose';
+// api/items/route.js
+import connectToDatabase from '../../../../lib/mongoose';
 import Item from '../../../../models/Item';
-import { verifyToken } from '../../../../lib/auth';  // Import the verifyToken function
+import { verifyToken } from '../../../../lib/auth';
 
 export async function GET(req) {
-  await dbConnect();
-  
+  await connectToDatabase();
+
   try {
     const items = await Item.find();
     return new Response(JSON.stringify(items), { status: 200 });
@@ -15,32 +16,33 @@ export async function GET(req) {
 }
 
 export async function POST(req) {
-  await dbConnect();
-  
+  const token = req.headers.get('Authorization')?.split(' ')[1];
+  if (!token) {
+    return new Response(JSON.stringify({ message: 'Authorization token missing' }), { status: 401 });
+  }
+
+  const verifiedUser = verifyToken(token);
+  if (!verifiedUser) {
+    return new Response(JSON.stringify({ message: 'Invalid or expired token' }), { status: 401 });
+  }
+
+  const { itemName, description, price, image, sellerPhoneNumber } = await req.json();
+
+  await connectToDatabase();
+
   try {
-    // Extract and verify the token
-    const token = req.headers.get('Authorization')?.split(' ')[1];
-    if (!token) {
-      return new Response(JSON.stringify({ message: 'Unauthorized' }), { status: 401 });
-    }
-
-    const decoded = verifyToken(token);
-    const { itemName, description, price, image } = await req.json();
-
-    // Create and save the new item
-    const newItem = new Item({
+    const newItem = await Item.create({
       itemName,
       description,
       price,
       image,
-      postedDate: new Date(),
-      postedBy: decoded.userId,  // Assuming userId from token
+      sellerPhoneNumber,
+      postedBy: verifiedUser.userId,
     });
 
-    await newItem.save();
-    return new Response(JSON.stringify({ message: 'Item added successfully' }), { status: 201 });
+    return new Response(JSON.stringify(newItem), { status: 201 });
   } catch (error) {
-    console.error("Error adding item:", error.message);
-    return new Response(JSON.stringify({ message: 'Error adding item', error: error.message }), { status: 500 });
+    console.error("Error creating item:", error.message);
+    return new Response(JSON.stringify({ message: 'Error creating item', error: error.message }), { status: 500 });
   }
 }

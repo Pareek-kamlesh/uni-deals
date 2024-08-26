@@ -1,3 +1,4 @@
+// models/Item.js
 import mongoose from 'mongoose';
 
 const ItemSchema = new mongoose.Schema({
@@ -6,7 +7,8 @@ const ItemSchema = new mongoose.Schema({
   price: { type: Number, required: true },
   image: { type: String, required: true }, // This stores the file path or URL of the image
   postedDate: { type: Date, default: Date.now },
-  postedBy: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true }, // Reference to the user who posted the item
+  postedBy: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
+  sellerPhoneNumber: { type: String, required: true }, // Reference to the user who posted the item
 });
 
 export default mongoose.models.Item || mongoose.model('Item', ItemSchema);

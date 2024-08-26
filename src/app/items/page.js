@@ -4,6 +4,12 @@ import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import styles from '../../../styles/ItemsPage.module.css';
 
+// Function to format the date
+const formatDate = (dateString) => {
+  const options = { year: 'numeric', month: 'long', day: 'numeric' };
+  return new Date(dateString).toLocaleDateString(undefined, options);
+};
+
 export default function ItemsPage() {
   const [items, setItems] = useState([]);
   const router = useRouter();
@@ -39,6 +45,7 @@ export default function ItemsPage() {
             <h3 className={styles.itemName}>{item.itemName}</h3>
             <p className={styles.itemDescription}>{item.description}</p>
             <p className={styles.itemPrice}>${item.price}</p>
+            <p className={styles.postedDate}>Posted on: {formatDate(item.postedDate)}</p>
             <button 
               onClick={() => router.push(`/items/${item._id}`)} 
               className={styles.viewDetailsButton}

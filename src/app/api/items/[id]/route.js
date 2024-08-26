@@ -1,8 +1,9 @@
-import dbConnect from '../../../../../lib/mongoose';
+// api/items/[id]/route.js
+import connectToDatabase from '../../../../../lib/mongoose';
 import Item from '../../../../../models/Item';
 
 export async function GET(req, { params }) {
-  await dbConnect();
+  await connectToDatabase();
   const { id } = params;
 
   try {
@@ -19,7 +20,7 @@ export async function GET(req, { params }) {
 }
 
 export async function DELETE(req, { params }) {
-  await dbConnect();
+  await connectToDatabase();
   const { id } = params;
 
   try {

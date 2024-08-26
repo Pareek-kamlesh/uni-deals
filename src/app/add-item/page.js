@@ -1,15 +1,18 @@
+// src/app/add-item/page.js
 'use client';
 
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import styles from '../../../styles/AddItem.module.css'; // Adjust path as needed
+import styles from '../../../styles/AddItem.module.css';
 
 export default function AddItem() {
   const [itemName, setItemName] = useState('');
   const [description, setDescription] = useState('');
   const [price, setPrice] = useState('');
   const [image, setImage] = useState('');
+  const [sellerPhoneNumber, setSellerPhoneNumber] = useState('');
   const router = useRouter();
+
   useEffect(() => {
     const token = localStorage.getItem('token');
 
@@ -21,19 +24,22 @@ export default function AddItem() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const token = localStorage.getItem('token'); // Assuming token is stored in localStorage
+    const token = localStorage.getItem('token');
+    if (!token) {
+      return;
+    }
 
-    const res = await fetch('/api/items', { // Update endpoint to /api/items
+    const res = await fetch('/api/items', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${token}` // Send token in the Authorization header
+        'Authorization': `Bearer ${token}`, 
       },
-      body: JSON.stringify({ itemName, description, price, image }),
+      body: JSON.stringify({ itemName, description, price, image, sellerPhoneNumber }),
     });
 
     if (res.ok) {
-      router.push('/items'); // Redirect to items page after successful addition
+      router.push('/items');
     } else {
       console.error('Failed to add item');
     }
@@ -73,11 +79,22 @@ export default function AddItem() {
           />
         </label>
         <label className={styles.label}>
-          <span className={styles.labelText}>Image URL: (You can upload your object's image to your drive and then paste a link of it here)</span>
+          <span className={styles.labelText}>Image URL:</span>
           <input
             type="text"
             value={image}
             onChange={(e) => setImage(e.target.value)}
+            required
+            className={styles.input}
+          />
+        </label>
+        <label className={styles.label}>
+          <span className={styles.labelText}>Phone Number:</span>
+          <input
+            type="text"
+            placeholder="Your phone number"
+            value={sellerPhoneNumber}
+            onChange={(e) => setSellerPhoneNumber(e.target.value)}
             required
             className={styles.input}
           />

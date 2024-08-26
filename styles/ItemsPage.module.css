@@ -34,7 +34,8 @@
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   overflow: hidden;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
-  padding-bottom: 15px;
+  padding: 15px; /* Added padding for internal spacing */
+  text-align: center; /* Center text content */
 }
 
 .itemCard:hover {
@@ -52,13 +53,13 @@
 .itemName {
   font-size: 1.5rem;
   color: #333;
-  margin: 10px 15px;
+  margin: 10px 0; /* Centered margin */
 }
 
 .itemDescription {
   font-size: 1rem;
   color: #666;
-  margin: 0 15px;
+  margin: 0 0 10px 0; /* Centered margin */
   height: 60px;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -67,10 +68,18 @@
 .itemPrice {
   font-size: 1.25rem;
   color: #ff6f61;
-  margin: 15px;
+  margin: 10px 0; /* Centered margin */
   font-weight: bold;
 }
 
+/* New styling for postedDate */
+.postedDate {
+  font-size: 0.875rem;
+  color: #999;
+  margin: 10px 0; /* Centered margin */
+}
+
+/* View details button styling */
 .viewDetailsButton {
   display: inline-block;
   padding: 10px 15px;
@@ -82,7 +91,7 @@
   cursor: pointer;
   transition: background-color 0.3s ease;
   margin-top: 10px;
-  margin-left: 15px;
+  margin-left: 0; /* Remove left margin for centering */
 }
 
 .viewDetailsButton:hover {
@@ -91,6 +100,13 @@
 
 @media (hover: hover) and (pointer: fine) {
   .itemCard:hover .itemImage {
-      filter: brightness(90%);
+    filter: brightness(90%);
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .itemGrid {
+    grid-template-columns: 1fr; /* Single column layout for small screens */
   }
 }

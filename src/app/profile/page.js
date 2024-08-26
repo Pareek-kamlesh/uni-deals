@@ -24,7 +24,7 @@ export default function ProfilePage() {
         .then((data) => {
           if (data.username) {
             setUserDetails({ username: data.username });
-            
+
             // Fetch items uploaded by the user
             fetch('/api/items/user-items', {
               method: 'GET',
@@ -78,12 +78,20 @@ export default function ProfilePage() {
                 <h3 className={styles.itemName}>{item.itemName}</h3>
                 <p className={styles.itemDescription}>{item.description}</p>
                 <p className={styles.itemPrice}>Rs. {item.price}</p>
-                <button
-                  onClick={() => handleDelete(item._id)}
-                  className={styles.deleteButton}
-                >
-                  Delete
-                </button>
+                <div className={styles.buttonGroup}>
+                  <button
+                    onClick={() => handleDelete(item._id)}
+                    className={styles.deleteButton}
+                  >
+                    Delete
+                  </button>
+                  <button
+                    onClick={() => router.push(`/items/${item._id}/edit`)}
+                    className={styles.updateButton}
+                  >
+                    Update
+                  </button>
+                </div>
               </div>
             </div>
           ))
