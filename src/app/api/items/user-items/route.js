@@ -9,7 +9,12 @@ export async function GET(req) {
 
   try {
     // Extract and verify the token
-    const token = req.headers.get('Authorization')?.split(' ')[1];
+    const authorizationHeader = req.headers.get('Authorization');
+    if (!authorizationHeader) {
+      return new Response(JSON.stringify({ message: 'Unauthorized' }), { status: 401 });
+    }
+
+    const token = authorizationHeader.split(' ')[1];
     if (!token) {
       return new Response(JSON.stringify({ message: 'Unauthorized' }), { status: 401 });
     }
@@ -23,4 +28,3 @@ export async function GET(req) {
     return new Response(JSON.stringify({ message: 'Error fetching user-specific items', error: error.message }), { status: 500 });
   }
 }
-

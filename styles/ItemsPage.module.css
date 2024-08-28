@@ -2,7 +2,9 @@
 
 .container {
   padding: 20px;
+  padding-top: 40px;
   background-color: #f9f9f9;
+  margin-top: 60px; /* Adjust this value to match your navbar height */
 }
 
 .addItemButton {
@@ -24,7 +26,7 @@
 
 .itemGrid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr); /* Ensure 3 columns */
+  grid-template-columns: repeat(3, 1fr);
   gap: 20px;
 }
 
@@ -34,8 +36,8 @@
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   overflow: hidden;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
-  padding: 15px; /* Added padding for internal spacing */
-  text-align: center; /* Center text content */
+  padding: 15px;
+  text-align: center;
 }
 
 .itemCard:hover {
@@ -53,13 +55,13 @@
 .itemName {
   font-size: 1.5rem;
   color: #333;
-  margin: 10px 0; /* Centered margin */
+  margin: 10px 0;
 }
 
 .itemDescription {
   font-size: 1rem;
   color: #666;
-  margin: 0 0 10px 0; /* Centered margin */
+  margin: 0 0 10px 0;
   height: 60px;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -68,18 +70,16 @@
 .itemPrice {
   font-size: 1.25rem;
   color: #ff6f61;
-  margin: 10px 0; /* Centered margin */
+  margin: 10px 0;
   font-weight: bold;
 }
 
-/* New styling for postedDate */
 .postedDate {
   font-size: 0.875rem;
   color: #999;
-  margin: 10px 0; /* Centered margin */
+  margin: 10px 0;
 }
 
-/* View details button styling */
 .viewDetailsButton {
   display: inline-block;
   padding: 10px 15px;
@@ -91,7 +91,7 @@
   cursor: pointer;
   transition: background-color 0.3s ease;
   margin-top: 10px;
-  margin-left: 0; /* Remove left margin for centering */
+  margin-left: 0;
 }
 
 .viewDetailsButton:hover {
@@ -101,12 +101,14 @@
 @media (hover: hover) and (pointer: fine) {
   .itemCard:hover .itemImage {
     filter: brightness(90%);
-  }
+}
 }
 
-/* Responsive Design */
 @media (max-width: 768px) {
   .itemGrid {
-    grid-template-columns: 1fr; /* Single column layout for small screens */
+    grid-template-columns: 1fr;
+  }
+  .container {
+    padding-top: 1000px; /* Increase padding for mobile devices */
   }
 }

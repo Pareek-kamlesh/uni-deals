@@ -1,94 +1,93 @@
 /* Container styling */
 .container {
-    max-width: 600px;
-    margin: 0 auto;
-    padding: 2rem;
-    background-color: #f9f9f9;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    font-family: 'Roboto', sans-serif;
-  }
-  
-  /* Form heading styling */
-  .container h2 {
-    font-size: 2rem;
-    font-weight: 700;
-    color: #2c3e50;
-    margin-bottom: 1.5rem;
-    text-align: center;
-  }
-  
-  /* Input field styling */
-  .inputField,
-  .textareaField {
-    width: 100%;
-    padding: 0.75rem;
-    margin-bottom: 1rem;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    font-size: 1rem;
-    color: #2c3e50;
-    background-color: #fff;
-    transition: border-color 0.3s ease;
-  }
-  
-  .inputField:focus,
-  .textareaField:focus {
-    border-color: #3498db;
-    outline: none;
-  }
-  
-  /* Textarea field specific styling */
-  .textareaField {
-    height: 120px;
-    resize: none;
-  }
-  
-  /* Button container for flexbox layout */
-  .buttonContainer {
-    display: flex;
-    justify-content: space-between;
-    margin-top: 1.5rem;
-    gap: 1rem;
-  }
-  
-  /* Submit button styling */
-  .submitButton,
-  .cancelButton {
-    flex: 1;
-    padding: 0.75rem;
-    border: none;
-    border-radius: 5px;
-    color: #fff;
-    font-size: 1rem;
-    cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.3s ease;
-  }
-  
-  .submitButton {
-    background-color: #2ecc71;
-  }
-  
-  .submitButton:hover {
-    background-color: #27ae60;
-    transform: scale(1.05);
-  }
-  
-  /* Cancel button styling */
-  .cancelButton {
-    background-color: #e74c3c;
-  }
-  
-  .cancelButton:hover {
-    background-color: #c0392b;
-    transform: scale(1.05);
-  }
-  
-  /* Message styling */
-  .message {
-    margin-top: 1rem;
-    font-size: 1rem;
-    color: #3498db;
-    text-align: center;
-  }
-  
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 2rem;
+  background-color: #f9f9f9;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  font-family: 'Roboto', sans-serif;
+}
+
+/* Form heading styling */
+.head {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #2c3e50;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+/* Input field styling */
+.inputField,
+.textareaField {
+  width: 100%;
+  padding: 0.75rem;
+  margin-bottom: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 1rem;
+  color: #2c3e50;
+  background-color: #fff;
+  transition: border-color 0.3s ease;
+}
+
+.inputField:focus,
+.textareaField:focus {
+  border-color: #3498db;
+  outline: none;
+}
+
+/* Textarea field specific styling */
+.textareaField {
+  height: 120px;
+  resize: none;
+}
+
+/* Button container for flexbox layout */
+.buttonContainer {
+  display: flex;
+  justify-content: space-between; /* Ensures space between the buttons */
+  margin-top: 1.5rem;
+  gap: 1rem;
+}
+
+/* Submit button styling */
+.submitButton,
+.cancelButton {
+  flex: 1; /* Makes both buttons the same size */
+  padding: 0.75rem;
+  border: none;
+  border-radius: 5px;
+  color: #fff;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.submitButton {
+  background-color: #2ecc71;
+}
+
+.submitButton:hover {
+  background-color: #27ae60;
+  transform: scale(1.05);
+}
+
+/* Cancel button styling */
+.cancelButton {
+  background-color: #e74c3c;
+}
+
+.cancelButton:hover {
+  background-color: #c0392b;
+  transform: scale(1.05);
+}
+
+/* Message styling */
+.message {
+  margin-top: 1rem;
+  font-size: 1rem;
+  color: #3498db;
+  text-align: center;
+}

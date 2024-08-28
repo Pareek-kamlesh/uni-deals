@@ -1,4 +1,5 @@
 .container {
+    margin-top: 80px;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -13,4 +14,9 @@
     border: none;
     cursor: pointer;
   }
-  
+  @media (max-width: 768px) {
+    
+    .container {
+      padding-top: 380px; /* Increase padding for mobile devices */
+    }
+  }

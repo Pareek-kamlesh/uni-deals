@@ -58,6 +58,43 @@ export async function POST(req) {
   
       return new Response(JSON.stringify({ token }), { status: 200 });
     }
+
+    if (action === 'change-password') {
+      const token = req.headers.get('Authorization')?.split(' ')[1];
+      const body = await req.json();
+      const { currentPassword, newPassword } = body;
+
+      if (!token) {
+          return new Response(JSON.stringify({ message: 'Unauthorized access' }), { status: 401 });
+      }
+
+      try {
+          // Verify the JWT token
+          const decoded = verifyToken(token);
+          const user = await User.findById(decoded.userId);
+
+          if (!user) {
+              return new Response(JSON.stringify({ message: 'User not found' }), { status: 404 });
+          }
+
+          // Check if the current password matches
+          const isMatch = await bcrypt.compare(currentPassword, user.password);
+          if (!isMatch) {
+              return new Response(JSON.stringify({ message: 'Current password is incorrect' }), { status: 400 });
+          }
+
+          // Hash the new password
+          const hashedNewPassword = await bcrypt.hash(newPassword, 10);
+          user.password = hashedNewPassword;
+
+          // Save the updated user with the new password
+          await user.save();
+
+          return new Response(JSON.stringify({ message: 'Password changed successfully' }), { status: 200 });
+      } catch (err) {
+          return new Response(JSON.stringify({ message: err.message }), { status: 500 });
+      }
+  }
   
     return new Response(JSON.stringify({ message: 'Action not supported' }), { status: 400 });
   }

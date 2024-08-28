@@ -79,7 +79,7 @@ export default function AddItem() {
           />
         </label>
         <label className={styles.label}>
-          <span className={styles.labelText}>Image URL:</span>
+          <span className={styles.labelText}>Image URL:(Please first upload your image to your drive so that you can paste the url of it)</span>
           <input
             type="text"
             value={image}
@@ -89,7 +89,7 @@ export default function AddItem() {
           />
         </label>
         <label className={styles.label}>
-          <span className={styles.labelText}>Phone Number:</span>
+          <span className={styles.labelText}>Phone Number:(Phone Number with country code....eg.(+91987654321))</span>
           <input
             type="text"
             placeholder="Your phone number"

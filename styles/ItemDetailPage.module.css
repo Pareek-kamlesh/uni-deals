@@ -113,10 +113,23 @@
 }
 
 /* Message styling */
-.message {
+.successMessage {
   margin-top: 10px;
   font-size: 1em;
-  color: #d9534f;
+  color: #28a745; /* Green for success */
+}
+
+/* Error message styling */
+.errorMessage {
+  margin-top: 10px;
+  font-size: 1em;
+  color: #d9534f; /* Red for errors */
+}
+/* Loading message styling */
+.loadingMessage {
+  margin-top: 10px;
+  font-size: 1em;
+  color: #007bff; /* Blue for loading */
 }
 
 /* Responsive Design */

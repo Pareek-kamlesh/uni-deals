@@ -29,7 +29,7 @@ export default function LoginPage() {
     if (res.ok) {
       const { token } = await res.json();
       localStorage.setItem('token', token);
-      router.push('/');
+      router.replace('/'); // Navigate to homepage without reloading
     } else {
       alert('Login failed');
     }

@@ -11,7 +11,8 @@ export default function LogoutPage() {
     localStorage.removeItem('token');
 
     // Redirect to the login page or home page
-    router.push('/login');
+    router.replace('/login');
+    
   }, [router]);
 
   return <p>Logging out...</p>;

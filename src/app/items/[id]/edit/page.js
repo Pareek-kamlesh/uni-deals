@@ -107,10 +107,13 @@ export default function EditItemPage() {
           required 
           className={styles.inputField}
         />
+        <div className={styles.buttonContainer}>
         <button type="submit" className={styles.submitButton}>Update</button>
         {message && <p className={styles.message}>{message}</p>}
+        <button onClick={() => router.push('/profile')} className={styles.cancelButton}>Cancel</button>
+        </div>
       </form>
-      <button onClick={() => router.push('/profile')} className={styles.cancelButton}>Cancel</button>
+      
     </div>
   );
 }

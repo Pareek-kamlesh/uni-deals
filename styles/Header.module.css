@@ -71,6 +71,7 @@
     position: absolute;
     top: 100%; /* Below the button */
     left: 0;
+    right: auto;
     background: #444;
     border-radius: 5px;
     padding: 10px;
@@ -91,4 +92,9 @@
   
   .menuLink:hover {
     background: #555;
+  }
+  @media (max-width: 768px) {
+    .usernameButton {
+      margin-left: 100px; /* Adjust this value as needed to move the button left */
+    }
   }
