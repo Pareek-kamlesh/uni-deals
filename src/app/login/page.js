@@ -1,7 +1,10 @@
 'use client';
 import { useState, useEffect } from 'react';
-import styles from '../../../styles/LoginPage.module.css'; // Import CSS module
+import styles from '../../../styles/LoginPage.module.css';
 import { useRouter } from 'next/navigation';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { showToast } from '../../../lib/toast';  // Import the utility function
 
 export default function LoginPage() {
   const [email, setEmail] = useState('');
@@ -29,9 +32,12 @@ export default function LoginPage() {
     if (res.ok) {
       const { token } = await res.json();
       localStorage.setItem('token', token);
-      router.replace('/'); // Navigate to homepage without reloading
+      showToast('success', 'Login successful! Redirecting...');  // Use the utility function
+      setTimeout(() => {
+        router.replace('/');
+      }, 2000);
     } else {
-      alert('Login failed');
+      showToast('error', 'Invalid credentials. Please try again.');  // Use the utility function
     }
   };
 
@@ -56,6 +62,8 @@ export default function LoginPage() {
         />
         <button className={styles.button} type="submit">Login</button>
       </form>
+      {/* Toast Container */}
+      <ToastContainer />
     </div>
   );
 }

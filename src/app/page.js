@@ -42,14 +42,19 @@ export default function HomePage() {
       });
   }, [router]);
 
+  useEffect(() => {
+    if (!loading) {
+      // Scroll to the top when the component is not loading
+      window.scrollTo(0, 0);
+    }
+  }, [loading]); // Triggered when loading state changes
+
   if (loading) {
     return <p>Loading...</p>;
   }
 
   return (
     <div className={styles.container}>
-      <h1>Welcome, {username || 'Loading...'}</h1>
-      {/* Render ItemsPage here */}
       <ItemsPage />
     </div>
   );

@@ -2,6 +2,9 @@
 
 import { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
+import { ToastContainer } from 'react-toastify'; // Import ToastContainer
+import 'react-toastify/dist/ReactToastify.css'; // Import Toastify CSS
+import { showToast } from '../../../lib/toast'; // Import the utility function
 
 export default function LogoutPage() {
   const router = useRouter();
@@ -10,10 +13,20 @@ export default function LogoutPage() {
     // Clear the token from local storage
     localStorage.removeItem('token');
 
-    // Redirect to the login page or home page
-    router.replace('/login');
-    
+    // Show toast notification for logout
+    showToast('success', 'Successfully logged out!');
+
+    // Redirect to the login page after a short delay
+    setTimeout(() => {
+      router.replace('/login');
+    }, 2000);
   }, [router]);
 
-  return <p>Logging out...</p>;
+  return (
+    <div>
+      <p>Logging out...</p>
+      {/* Toast Container */}
+      <ToastContainer />
+    </div>
+  );
 }

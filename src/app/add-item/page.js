@@ -4,6 +4,9 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import styles from '../../../styles/AddItem.module.css';
+import { ToastContainer } from 'react-toastify'; // Import ToastContainer
+import 'react-toastify/dist/ReactToastify.css'; // Import Toastify CSS
+import { showToast } from '../../../lib/toast'; // Import the utility function
 
 export default function AddItem() {
   const [itemName, setItemName] = useState('');
@@ -18,7 +21,7 @@ export default function AddItem() {
 
     if (!token) {
       router.push('/login');
-    } 
+    }
   }, [router]);
 
   const handleSubmit = async (e) => {
@@ -26,6 +29,7 @@ export default function AddItem() {
 
     const token = localStorage.getItem('token');
     if (!token) {
+      showToast('error', 'You must be logged in to add an item.');
       return;
     }
 
@@ -33,15 +37,18 @@ export default function AddItem() {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${token}`, 
+        'Authorization': `Bearer ${token}`,
       },
       body: JSON.stringify({ itemName, description, price, image, sellerPhoneNumber }),
     });
 
     if (res.ok) {
-      router.push('/items');
+      showToast('success', 'Adding Item...!');
+      setTimeout(() => {
+        router.push('/profile');
+      }, 2000);
     } else {
-      console.error('Failed to add item');
+      showToast('error', 'Failed to add item. Please try again.');
     }
   };
 
@@ -79,7 +86,9 @@ export default function AddItem() {
           />
         </label>
         <label className={styles.label}>
-          <span className={styles.labelText}>Image URL:(Please first upload your image to your drive so that you can paste the url of it)</span>
+          <span className={styles.labelText}>
+            Image URL:(Please first upload your image to your drive so that you can paste the url of it)
+          </span>
           <input
             type="text"
             value={image}
@@ -89,7 +98,9 @@ export default function AddItem() {
           />
         </label>
         <label className={styles.label}>
-          <span className={styles.labelText}>Phone Number:(Phone Number with country code....eg.(+91987654321))</span>
+          <span className={styles.labelText}>
+            Phone Number:(Phone Number with country code....eg.(+91987654321))
+          </span>
           <input
             type="text"
             placeholder="Your phone number"
@@ -103,6 +114,8 @@ export default function AddItem() {
           Add Item
         </button>
       </form>
+      {/* Toast Container */}
+      <ToastContainer />
     </div>
   );
 }

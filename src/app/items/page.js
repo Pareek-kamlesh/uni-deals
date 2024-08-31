@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import styles from '../../../styles/ItemsPage.module.css';
 
@@ -13,6 +13,7 @@ const formatDate = (dateString) => {
 export default function ItemsPage() {
   const [items, setItems] = useState([]);
   const router = useRouter();
+  const containerRef = useRef(null); // Create a ref for the container
 
   useEffect(() => {
     const token = localStorage.getItem('token');
@@ -36,8 +37,17 @@ export default function ItemsPage() {
     fetchItems();
   }, []);
 
+  const scrollToTop = () => {
+    if (containerRef.current) {
+      containerRef.current.scrollTo({
+        top: 0,
+        behavior: 'smooth', // Optional: for smooth scrolling effect
+      });
+    }
+  };
+
   return (
-    <div className={styles.container}>
+    <div className={styles.container} ref={containerRef}>
       <div className={styles.itemGrid}>
         {items.map(item => (
           <div key={item._id} className={styles.itemCard}>

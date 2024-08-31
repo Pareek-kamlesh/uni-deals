@@ -1,11 +1,16 @@
 /* ItemsPage.module.css */
 
+/* ItemsPage.module.css */
+
 .container {
   padding: 20px;
-  padding-top: 40px;
-  background-color: #f9f9f9;
-  margin-top: 60px; /* Adjust this value to match your navbar height */
+  padding-top: 40px; /* Adjust to match header height */
+  background-color: #242121;
+  margin-top: 0; /* Ensure no additional margin */
+  overflow-y: auto; /* Enable vertical scrolling */
+  height: calc(100vh - 60px); /* Adjust height to fit viewport minus header height */
 }
+
 
 .addItemButton {
   display: inline-block;
@@ -109,6 +114,13 @@
     grid-template-columns: 1fr;
   }
   .container {
-    padding-top: 1000px; /* Increase padding for mobile devices */
+    padding-top: 20px; /* Adjust padding for smaller screens */
+    height: calc(100vh - 60px); /* Consistent height calculation */
+    margin-top: 0px; /* Ensure margin is consistent */
+    width: 100%; /* Use full width on mobile */
+    background-color: whitesmoke;
+    justify-content: flex-start; /* Ensure content is aligned to the top */
   }
+
+ 
 }

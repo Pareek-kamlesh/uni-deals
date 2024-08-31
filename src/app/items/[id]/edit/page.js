@@ -1,8 +1,11 @@
-"use client";
+'use client';
 
 import { useEffect, useState } from 'react';
 import { useRouter, useParams } from 'next/navigation';
 import styles from '../../../../../styles/UpdateItemPage.module.css';
+import { showToast } from '../../../../../lib/toast'; // Import your showToast function
+import { ToastContainer } from 'react-toastify'; // Import ToastContainer
+import 'react-toastify/dist/ReactToastify.css'; // Import Toastify CSS
 
 export default function EditItemPage() {
   const [itemName, setItemName] = useState('');
@@ -10,7 +13,6 @@ export default function EditItemPage() {
   const [price, setPrice] = useState('');
   const [image, setImage] = useState('');
   const [sellerPhoneNumber, setSellerPhoneNumber] = useState('');
-  const [message, setMessage] = useState('');
   const router = useRouter();
   const { id } = useParams();
 
@@ -33,7 +35,10 @@ export default function EditItemPage() {
           setImage(data.image);
           setSellerPhoneNumber(data.sellerPhoneNumber);
         })
-        .catch((error) => console.error('Failed to fetch item details:', error));
+        .catch((error) => {
+          console.error('Failed to fetch item details:', error);
+          showToast('error', 'Failed to fetch item details. Please try again.'); // Show toast on error
+        });
     }
   }, [id, router]);
 
@@ -53,14 +58,16 @@ export default function EditItemPage() {
       });
 
       if (res.ok) {
-        setMessage('Item updated successfully.');
-        router.push('/profile');
+        showToast('success', 'Item updated successfully.');
+        setTimeout(() => {
+          router.push('/profile');
+        }, 2000);
       } else {
-        setMessage('Failed to update item. Please try again.');
+        showToast('error', 'Failed to update item. Please try again.'); // Use showToast for error
       }
     } catch (error) {
       console.error('Error updating item:', error);
-      setMessage('An error occurred. Please try again.');
+      showToast('error', 'An error occurred. Please try again.'); // Use showToast for error
     }
   };
 
@@ -108,12 +115,11 @@ export default function EditItemPage() {
           className={styles.inputField}
         />
         <div className={styles.buttonContainer}>
-        <button type="submit" className={styles.submitButton}>Update</button>
-        {message && <p className={styles.message}>{message}</p>}
-        <button onClick={() => router.push('/profile')} className={styles.cancelButton}>Cancel</button>
+          <button type="submit" className={styles.submitButton}>Update</button>
+          <button onClick={() => router.push('/profile')} className={styles.cancelButton}>Cancel</button>
         </div>
       </form>
-      
+      <ToastContainer /> {/* Add ToastContainer to render toasts */}
     </div>
   );
 }

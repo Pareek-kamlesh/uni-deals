@@ -3,6 +3,9 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import styles from '../../../styles/ChangePasswordPage.module.css'; // Ensure this path is correct
+import { showToast } from '../../../lib/toast'; // Import your showToast function
+import { ToastContainer } from 'react-toastify'; // Import ToastContainer
+import 'react-toastify/dist/ReactToastify.css'; // Import Toastify CSS
 
 export default function ChangePasswordPage() {
   const [currentPassword, setCurrentPassword] = useState('');
@@ -21,22 +24,29 @@ export default function ChangePasswordPage() {
     e.preventDefault();
     const token = localStorage.getItem('token');
 
-    const res = await fetch('/api/auth?action=change-password', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${token}`,
-      },
-      body: JSON.stringify({ currentPassword, newPassword }),
-    });
+    try {
+      const res = await fetch('/api/auth?action=change-password', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({ currentPassword, newPassword }),
+      });
 
-    if (res.ok) {
-      // Password changed successfully
-      router.push('/profile');
-    } else {
-      // Handle errors
-      const data = await res.json();
-      alert(data.message);
+      if (res.ok) {
+        showToast('success', 'Password changed successfully.'); 
+        setTimeout(()=>{
+          router.push('/profile');
+        }, 2000)// Use showToast for success
+        
+      } else {
+        const data = await res.json();
+        showToast('error', data.message || 'Failed to change password.'); // Use showToast for error
+      }
+    } catch (error) {
+      console.error('Error changing password:', error);
+      showToast('error', 'An error occurred. Please try again.'); // Use showToast for error
     }
   };
 
@@ -68,6 +78,7 @@ export default function ChangePasswordPage() {
         </div>
         <button type="submit" className={styles.button}>Change Password</button>
       </form>
+      <ToastContainer /> {/* Add ToastContainer to render toasts */}
     </div>
   );
 }

@@ -2,14 +2,14 @@
 .container {
   padding: 2rem;
   max-width: 1200px;
-  margin: 0 auto; /* Center container horizontally */
+  margin: 40px auto; /* Center container horizontally */
   font-family: 'Roboto', sans-serif;
 }
 
 /* Flexbox container for title and button */
 .header {
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
   align-items: center;
   margin-bottom: 4rem; /* Add space below the header */
 }

@@ -11,7 +11,6 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <body>
         <Header />
-        <div className="header-spacer"></div> {/* Spacer to push content below header */}
         {children}
       </body>
     </html>

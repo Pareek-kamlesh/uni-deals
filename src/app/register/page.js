@@ -2,6 +2,9 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import styles from '../../../styles/RegisterPage.module.css'; // Import CSS module
+import { ToastContainer } from 'react-toastify'; // Import ToastContainer
+import 'react-toastify/dist/ReactToastify.css'; // Import Toastify CSS
+import { showToast } from '../../../lib/toast'; // Import the utility function
 
 export default function RegisterPage() {
   const [email, setEmail] = useState('');
@@ -21,7 +24,7 @@ export default function RegisterPage() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (password !== confirmPassword) {
-      alert('Passwords do not match');
+      showToast('error', 'Passwords do not match');  // Show toast for mismatched passwords
       return;
     }
     const res = await fetch('/api/auth?action=register', {
@@ -33,9 +36,12 @@ export default function RegisterPage() {
     });
 
     if (res.ok) {
-      router.push('/login');
+      showToast('success', 'Registration successful! Redirecting to login...');
+      setTimeout(() => {
+        router.push('/login');
+      }, 2000);
     } else {
-      alert('Registration failed');
+      showToast('error', 'Registration failed. Please try again.');  // Show toast for failed registration
     }
   };
 
@@ -43,13 +49,13 @@ export default function RegisterPage() {
     <div className={styles.container}>
       <form onSubmit={handleSubmit} className={styles.form}>
         <input
-            type="text"
-            placeholder="Username"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-            required
-            className={styles.input}
-          />
+          type="text"
+          placeholder="Username"
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
+          required
+          className={styles.input}
+        />
         <input
           type="email"
           placeholder="Email"
@@ -76,6 +82,8 @@ export default function RegisterPage() {
         />
         <button className={styles.button} type="submit">Register</button>
       </form>
+      {/* Toast Container */}
+      <ToastContainer />
     </div>
   );
 }

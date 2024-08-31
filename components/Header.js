@@ -1,8 +1,8 @@
-'use client'; // Ensure this is a Client Component
-
+// Header.js
+'use client'
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
-import styles from '../styles/Header.module.css'; // Update path if needed
+import styles from '../styles/Header.module.css';
 
 export default function Header() {
   const [username, setUsername] = useState(null);
@@ -27,12 +27,15 @@ export default function Header() {
     }
   }, []);
 
+ 
   return (
     <header className={styles.header}>
       <nav className={styles.nav}>
         <ul className={styles.navList}>
           <li className={styles.navItem}>
-            <Link href="/" className={styles.navLink}>Home</Link>
+            <a href="/" className={styles.navLink}>
+              Uni-Deals
+            </a>
           </li>
           {username ? (
             <li className={styles.navItem}>

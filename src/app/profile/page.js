@@ -3,6 +3,9 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import styles from '../../../styles/ProfilePage.module.css';
+import { showToast } from '../../../lib/toast'; // Import your showToast function
+import { ToastContainer } from 'react-toastify'; // Import ToastContainer
+import 'react-toastify/dist/ReactToastify.css'; // Import Toastify CSS
 
 export default function ProfilePage() {
   const [userDetails, setUserDetails] = useState(null);
@@ -51,9 +54,10 @@ export default function ProfilePage() {
     });
 
     if (res.ok) {
-      alert('Item deleted successfully');
+      showToast('success', 'Item deleted successfully'); // Use showToast for success
       setItems(items.filter((item) => item._id !== itemId));
     } else {
+      showToast('error', 'Failed to delete item'); // Use showToast for error
       console.error('Failed to delete item');
     }
   };
@@ -97,6 +101,7 @@ export default function ProfilePage() {
           ))
         )}
       </div>
+      <ToastContainer /> {/* Add ToastContainer to render toasts */}
     </div>
   );
 }
