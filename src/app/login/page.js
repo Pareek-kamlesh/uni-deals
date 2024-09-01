@@ -13,10 +13,15 @@ export default function LoginPage() {
 
   useEffect(() => {
     const token = localStorage.getItem('token');
+    const tokenExpiry = localStorage.getItem('tokenExpiry');
+    const currentTime = new Date().getTime();
 
-    if (token) {
+    if (token && tokenExpiry && currentTime < tokenExpiry) {
       router.push('/');
-    } 
+    } else {
+      localStorage.removeItem('token');
+      localStorage.removeItem('tokenExpiry');
+    }
   }, [router]);
 
   const handleSubmit = async (e) => {
@@ -30,17 +35,18 @@ export default function LoginPage() {
     });
 
     if (res.ok) {
-      const { token } = await res.json();
+      const { token, expiresIn } = await res.json();
+      const expiryDate = new Date().getTime() + expiresIn * 1000;
       localStorage.setItem('token', token);
-      showToast('success', 'Login successful! Redirecting...');  // Use the utility function
+      localStorage.setItem('tokenExpiry', expiryDate);
+      showToast('success', 'Login successful! Redirecting...');
       setTimeout(() => {
-        router.replace('/');
+        router.push('/');
       }, 2000);
     } else {
-      showToast('error', 'Invalid credentials. Please try again.');  // Use the utility function
+      showToast('error', 'Invalid credentials. Please try again.');
     }
   };
-
   return (
     <div className={styles.container}>
       <form onSubmit={handleSubmit} className={styles.form}>

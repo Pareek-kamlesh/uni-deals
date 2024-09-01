@@ -55,8 +55,9 @@ export async function POST(req) {
   
       // Generate JWT token
       const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
+      const expiresIn = 3600;
   
-      return new Response(JSON.stringify({ token }), { status: 200 });
+      return new Response(JSON.stringify({ token, expiresIn }), { status: 200 });
     }
 
     if (action === 'change-password') {
