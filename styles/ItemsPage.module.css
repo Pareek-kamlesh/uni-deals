@@ -1,16 +1,14 @@
 /* ItemsPage.module.css */
 
-/* ItemsPage.module.css */
-
 .container {
   padding: 20px;
   padding-top: 40px; /* Adjust to match header height */
-  background-color: #242121;
+  background-color: #ede7e7;
   margin-top: 0; /* Ensure no additional margin */
-  overflow-y: auto; /* Enable vertical scrolling */
-  height: calc(100vh - 60px); /* Adjust height to fit viewport minus header height */
+  height: auto; /* Remove fixed height */
+  min-height: calc(100vh - 60px); /* Ensure container takes full viewport height */
+  box-sizing: border-box; /* Ensure padding is included in height calculation */
 }
-
 
 .addItemButton {
   display: inline-block;
@@ -43,6 +41,7 @@
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   padding: 15px;
   text-align: center;
+  box-sizing: border-box;
 }
 
 .itemCard:hover {
@@ -55,6 +54,7 @@
   height: 200px;
   object-fit: contain;
   border-bottom: 2px solid #e0e0e0;
+  box-sizing: border-box;
 }
 
 .itemName {
@@ -106,7 +106,7 @@
 @media (hover: hover) and (pointer: fine) {
   .itemCard:hover .itemImage {
     filter: brightness(90%);
-}
+  }
 }
 
 @media (max-width: 768px) {
@@ -115,12 +115,10 @@
   }
   .container {
     padding-top: 20px; /* Adjust padding for smaller screens */
-    height: calc(100vh - 60px); /* Consistent height calculation */
+    min-height: calc(100vh - 60px); /* Ensure consistent height calculation */
     margin-top: 0px; /* Ensure margin is consistent */
     width: 100%; /* Use full width on mobile */
     background-color: whitesmoke;
     justify-content: flex-start; /* Ensure content is aligned to the top */
   }
-
- 
 }

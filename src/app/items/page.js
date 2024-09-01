@@ -54,7 +54,7 @@ export default function ItemsPage() {
             <img src={item.image} alt={item.itemName} className={styles.itemImage} />
             <h3 className={styles.itemName}>{item.itemName}</h3>
             <p className={styles.itemDescription}>{item.description}</p>
-            <p className={styles.itemPrice}>${item.price}</p>
+            <p className={styles.itemPrice}>Rs. {item.price}</p>
             <p className={styles.postedDate}>Posted on: {formatDate(item.postedDate)}</p>
             <button 
               onClick={() => router.push(`/items/${item._id}`)} 

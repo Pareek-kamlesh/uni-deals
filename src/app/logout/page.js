@@ -17,9 +17,12 @@ export default function LogoutPage() {
     showToast('success', 'Successfully logged out!');
 
     // Redirect to the login page after a short delay
-    setTimeout(() => {
+    const timer = setTimeout(() => {
       router.replace('/login');
     }, 2000);
+
+    // Cleanup the timer if the component is unmounted
+    return () => clearTimeout(timer);
   }, [router]);
 
   return (

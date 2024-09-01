@@ -16,7 +16,7 @@ export default function ClientLayout({ children }) {
     // Mock loading delay
     const timer = setTimeout(() => {
       setLoading(false); // Hide spinner after delay
-    }, 500); // Adjust time as needed
+    }, 1000); // Adjust time as needed
 
     return () => clearTimeout(timer); // Cleanup timer on unmount
   }, [pathname]); // Depend on pathname changes

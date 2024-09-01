@@ -1,13 +1,16 @@
-// Header.js
-'use client'
-import { useEffect, useState } from 'react';
+'use client';
+import { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import styles from '../styles/Header.module.css';
 
 export default function Header() {
   const [username, setUsername] = useState(null);
+  const [menuOpen, setMenuOpen] = useState(false);
+  const menuRef = useRef(null);
+  const router = useRouter();
 
-  useEffect(() => {
+  const checkUserLogin = () => {
     const token = localStorage.getItem('token');
 
     if (token) {
@@ -19,34 +22,84 @@ export default function Header() {
       })
         .then((res) => res.json())
         .then((data) => {
-          if (data.username) {
-            setUsername(data.username);
-          }
+          setUsername(data.username || null);
         })
-        .catch((error) => console.error('Error fetching user data:', error));
+        .catch((error) => {
+          console.error('Error fetching user data:', error);
+          setUsername(null);
+        });
+    } else {
+      setUsername(null);
     }
+  };
+
+  useEffect(() => {
+    checkUserLogin();
+
+    const handleStorageChange = () => {
+      checkUserLogin();
+    };
+
+    window.addEventListener('storage', handleStorageChange);
+
+    return () => {
+      window.removeEventListener('storage', handleStorageChange);
+    };
   }, []);
 
- 
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (menuRef.current && !menuRef.current.contains(event.target)) {
+        setMenuOpen(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
+
+  useEffect(() => {
+    const handleRouteChange = () => {
+      setMenuOpen(false); // Close menu on route change
+    };
+
+    router.events?.on('routeChangeStart', handleRouteChange);
+
+    return () => {
+      router.events?.off('routeChangeStart', handleRouteChange);
+    };
+  }, [router]);
+
+  const toggleMenu = () => {
+    setMenuOpen(!menuOpen);
+  };
+
+  const handleMenuClick = () => {
+    setMenuOpen(false); // Close menu when clicking a link
+  };
+
   return (
     <header className={styles.header}>
       <nav className={styles.nav}>
         <ul className={styles.navList}>
           <li className={styles.navItem}>
-            <a href="/" className={styles.navLink}>
+            <Link href="/" className={styles.navLink}>
               Uni-Deals
-            </a>
+            </Link>
           </li>
           {username ? (
             <li className={styles.navItem}>
-              <div className={styles.usernameMenu}>
-                <span className={styles.usernameButton}>
-                  {username[0]} {/* Display the first letter of the username */}
+              <div className={`${styles.usernameMenu} ${menuOpen ? 'open' : ''}`} ref={menuRef}>
+                <span className={styles.usernameButton} onClick={toggleMenu}>
+                  {username[0]}
                 </span>
-                <div className={styles.menu}>
-                  <Link href="/profile" className={styles.menuLink}>Profile</Link>
-                  <Link href="/change-password" className={styles.menuLink}>Change Password</Link>
-                  <Link href="/logout" className={styles.menuLink}>Logout</Link>
+                <div className={`${styles.menu} ${menuOpen ? styles.menuOpen : ''}`}>
+                  <Link href="/profile" className={styles.menuLink} onClick={handleMenuClick}>Profile</Link>
+                  <Link href="/change-password" className={styles.menuLink} onClick={handleMenuClick}>Change Password</Link>
+                  <a href="/logout" className={styles.menuLink} onClick={handleMenuClick}>Logout</a>
                 </div>
               </div>
             </li>

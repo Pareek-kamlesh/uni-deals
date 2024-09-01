@@ -15,6 +15,7 @@ export default function HomePage() {
     console.log('Token:', token); // Debugging
 
     if (!token) {
+      
       router.push('/login');
       return;
     }
