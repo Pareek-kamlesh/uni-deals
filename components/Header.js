@@ -1,53 +1,20 @@
+// src/components/Header.js
 'use client';
 import { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
+import { useAuth } from '@/context/AuthContext';
 import styles from '../styles/Header.module.css';
 
 export default function Header() {
-  const [username, setUsername] = useState(null);
+  const { username, checkUserLogin } = useAuth();
   const [menuOpen, setMenuOpen] = useState(false);
   const menuRef = useRef(null);
   const router = useRouter();
 
-  const checkUserLogin = () => {
-    const token = localStorage.getItem('token');
-
-    if (token) {
-      fetch('/api/auth?action=protected-route', {
-        method: 'GET',
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
-        .then((res) => res.json())
-        .then((data) => {
-          setUsername(data.username || null);
-        })
-        .catch((error) => {
-          console.error('Error fetching user data:', error);
-          setUsername(null);
-        });
-    } else {
-      setUsername(null);
-    }
-  };
-
   useEffect(() => {
-    checkUserLogin();
+    checkUserLogin(); // Ensure context updates
 
-    const handleStorageChange = () => {
-      checkUserLogin();
-    };
-
-    window.addEventListener('storage', handleStorageChange);
-
-    return () => {
-      window.removeEventListener('storage', handleStorageChange);
-    };
-  }, []);
-
-  useEffect(() => {
     const handleClickOutside = (event) => {
       if (menuRef.current && !menuRef.current.contains(event.target)) {
         setMenuOpen(false);
@@ -59,11 +26,11 @@ export default function Header() {
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
     };
-  }, []);
+  }, [checkUserLogin]);
 
   useEffect(() => {
     const handleRouteChange = () => {
-      setMenuOpen(false); // Close menu on route change
+      setMenuOpen(false);
     };
 
     router.events?.on('routeChangeStart', handleRouteChange);
@@ -78,7 +45,7 @@ export default function Header() {
   };
 
   const handleMenuClick = () => {
-    setMenuOpen(false); // Close menu when clicking a link
+    setMenuOpen(false);
   };
 
   return (

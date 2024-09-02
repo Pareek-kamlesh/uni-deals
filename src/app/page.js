@@ -15,7 +15,6 @@ export default function HomePage() {
     console.log('Token:', token); // Debugging
 
     if (!token) {
-      
       router.push('/login');
       return;
     }
@@ -27,7 +26,15 @@ export default function HomePage() {
         Authorization: `Bearer ${token}`,
       },
     })
-      .then((res) => res.json())
+      .then((response) => {
+        if (response.status === 401) {
+          // Token might be invalid or expired
+          localStorage.removeItem('token');
+          router.push('/login');  // Redirect to login
+          return Promise.reject('Unauthorized');  // Exit the promise chain
+        }
+        return response.json();
+      })
       .then((data) => {
         console.log('User Data:', data); // Debugging
         if (data.message && data.message.startsWith('Welcome')) {
