@@ -1,17 +1,56 @@
 .container {
-    margin-top: 60px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
+  margin-top: 60px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.button {
+  padding: 10px;
+  background-color: #0070f3;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+.searchBar {
+  width: 100%;
+  max-width: 600px;
+  padding: 12px 20px;
+  font-size: large;
+  color: #fbfbfb;
+  border: 1px solid #ccc;
+  border-radius: 25px;
+  background: linear-gradient(145deg, #3a3d3d, #d4e9e6);
+  box-shadow: 5px 5px 10px #d0d0d0, -5px -5px 10px #ffffff;
+  outline: none;
+  transition: all 0.3s ease-in-out;
+  margin-bottom: 8px; /* Add margin below the search bar */
+  margin-top: 30px;
+}
+
+.searchBar:focus {
+  border-color: #414446;
+  background: linear-gradient(145deg, #3a3d3d, #d4e9e6);
+  box-shadow: 5px 5px 10px #d0d0d0, -5px -5px 10px #ffffff;
+}
+.searchBar::placeholder {
+  color: rgb(255, 255, 255); /* Set placeholder color to white */
+  font-size: large;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .itemCard:hover .itemImage {
+    filter: brightness(90%);
   }
-  
-  .button {
-    padding: 10px;
-    background-color: #0070f3;
-    color: white;
-    border: none;
-    cursor: pointer;
+}
+
+@media (max-width: 768px) {
+  .searchBar {
+    width: 90%;
+    font-size: 14px; /* Adjust font size for smaller screens */
+    padding: 10px 15px; /* Adjust padding for smaller screens */
   }
- 
+}

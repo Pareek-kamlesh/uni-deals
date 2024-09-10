@@ -1,8 +1,8 @@
-import connectToDatabase from '../../../../lib/mongoose';
-import User from '../../../../models/User';
+import connectToDatabase from '@lib/mongoose';
+import User from '@models/User';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
-import { verifyToken } from '../../../../lib/auth';
+import { verifyToken } from '@lib/auth';
 
 export async function POST(req) {
   await connectToDatabase();
@@ -12,12 +12,10 @@ export async function POST(req) {
 
   try {
     if (action === 'register') {
-      const body = await req.json();
-      const { email, password, username } = body;
+      const { email, password, username } = await req.json();
 
       // Check if user already exists
-      const userExists = await User.findOne({ email });
-      if (userExists) {
+      if (await User.findOne({ email })) {
         return new Response(JSON.stringify({ message: 'User already exists' }), { status: 400 });
       }
 
@@ -30,8 +28,7 @@ export async function POST(req) {
     }
 
     if (action === 'login') {
-      const body = await req.json();
-      const { email, password } = body;
+      const { email, password } = await req.json();
 
       // Find the user by email
       const user = await User.findOne({ email });
@@ -40,22 +37,18 @@ export async function POST(req) {
       }
 
       // Check if the password matches
-      const isMatch = await bcrypt.compare(password, user.password);
-      if (!isMatch) {
+      if (!await bcrypt.compare(password, user.password)) {
         return new Response(JSON.stringify({ message: 'Invalid credentials' }), { status: 401 });
       }
 
       // Generate JWT token
       const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
-      const expiresIn = 3600;
-
-      return new Response(JSON.stringify({ token, expiresIn }), { status: 200 });
+      return new Response(JSON.stringify({ token, expiresIn: 3600 }), { status: 200 });
     }
 
     if (action === 'change-password') {
       const token = req.headers.get('Authorization')?.split(' ')[1];
-      const body = await req.json();
-      const { currentPassword, newPassword } = body;
+      const { currentPassword, newPassword } = await req.json();
 
       if (!token) {
         return new Response(JSON.stringify({ message: 'Unauthorized access' }), { status: 401 });
@@ -69,16 +62,12 @@ export async function POST(req) {
       }
 
       // Check if the current password matches
-      const isMatch = await bcrypt.compare(currentPassword, user.password);
-      if (!isMatch) {
+      if (!await bcrypt.compare(currentPassword, user.password)) {
         return new Response(JSON.stringify({ message: 'Current password is incorrect' }), { status: 400 });
       }
 
-      // Hash the new password
-      const hashedNewPassword = await bcrypt.hash(newPassword, 10);
-      user.password = hashedNewPassword;
-
-      // Save the updated user with the new password
+      // Hash the new password and save the updated user
+      user.password = await bcrypt.hash(newPassword, 10);
       await user.save();
 
       return new Response(JSON.stringify({ message: 'Password changed successfully' }), { status: 200 });

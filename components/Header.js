@@ -53,9 +53,9 @@ export default function Header() {
       <nav className={styles.nav}>
         <ul className={styles.navList}>
           <li className={styles.navItem}>
-            <a href="/" className={styles.navLink}>
+            <Link href="/" className={styles.navLink}>
               Uni-Deals
-            </a>
+            </Link>
           </li>
           {username ? (
             <li className={styles.navItem}>

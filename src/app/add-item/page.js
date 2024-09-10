@@ -1,28 +1,21 @@
 // src/app/add-item/page.js
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import styles from '../../../styles/AddItem.module.css';
 import { ToastContainer } from 'react-toastify'; // Import ToastContainer
 import 'react-toastify/dist/ReactToastify.css'; // Import Toastify CSS
 import { showToast } from '../../../lib/toast'; // Import the utility function
+import withAuth from '../../../components/withAuth'; // Import withAuth
 
-export default function AddItem() {
+function AddItem() {
   const [itemName, setItemName] = useState('');
   const [description, setDescription] = useState('');
   const [price, setPrice] = useState('');
   const [image, setImage] = useState('');
   const [sellerPhoneNumber, setSellerPhoneNumber] = useState('');
   const router = useRouter();
-
-  useEffect(() => {
-    const token = localStorage.getItem('token');
-
-    if (!token) {
-      router.push('/login');
-    }
-  }, [router]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -119,3 +112,5 @@ export default function AddItem() {
     </div>
   );
 }
+
+export default withAuth(AddItem);

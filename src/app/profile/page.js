@@ -6,8 +6,8 @@ import styles from '../../../styles/ProfilePage.module.css';
 import { showToast } from '../../../lib/toast'; // Import your showToast function
 import { ToastContainer } from 'react-toastify'; // Import ToastContainer
 import 'react-toastify/dist/ReactToastify.css'; // Import Toastify CSS
-
-export default function ProfilePage() {
+import withAuth from '../../../components/withAuth';
+function ProfilePage() {
   const [userDetails, setUserDetails] = useState(null);
   const [items, setItems] = useState([]);
   const router = useRouter();
@@ -105,3 +105,5 @@ export default function ProfilePage() {
     </div>
   );
 }
+
+export default withAuth(ProfilePage);

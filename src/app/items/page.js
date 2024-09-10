@@ -10,18 +10,10 @@ const formatDate = (dateString) => {
   return new Date(dateString).toLocaleDateString(undefined, options);
 };
 
-export default function ItemsPage() {
+export default function ItemsPage({ searchQuery }) {
   const [items, setItems] = useState([]);
   const router = useRouter();
   const containerRef = useRef(null); // Create a ref for the container
-
-  useEffect(() => {
-    const token = localStorage.getItem('token');
-
-    if (!token) {
-      router.push('/login');
-    } 
-  }, [router]);
 
   useEffect(() => {
     async function fetchItems() {
@@ -35,21 +27,29 @@ export default function ItemsPage() {
     }
 
     fetchItems();
+
+    // Restore scroll position
+    const savedScrollPosition = sessionStorage.getItem('scrollPosition');
+    if (savedScrollPosition) {
+      containerRef.current.scrollTo(0, parseInt(savedScrollPosition, 10));
+    }
   }, []);
 
-  const scrollToTop = () => {
-    if (containerRef.current) {
-      containerRef.current.scrollTo({
-        top: 0,
-        behavior: 'smooth', // Optional: for smooth scrolling effect
-      });
-    }
+  const handleItemClick = (itemId) => {
+    // Save scroll position
+    sessionStorage.setItem('scrollPosition', containerRef.current.scrollTop);
+    router.push(`/items/${itemId}`);
   };
+
+  // Filter items based on search query
+  const filteredItems = items.filter(item =>
+    item.itemName.toLowerCase().includes(searchQuery.toLowerCase())
+  );
 
   return (
     <div className={styles.container} ref={containerRef}>
       <div className={styles.itemGrid}>
-        {items.map(item => (
+        {filteredItems.map(item => (
           <div key={item._id} className={styles.itemCard}>
             <img src={item.image} alt={item.itemName} className={styles.itemImage} />
             <h3 className={styles.itemName}>{item.itemName}</h3>
@@ -57,7 +57,7 @@ export default function ItemsPage() {
             <p className={styles.itemPrice}>Rs. {item.price}</p>
             <p className={styles.postedDate}>Posted on: {formatDate(item.postedDate)}</p>
             <button 
-              onClick={() => router.push(`/items/${item._id}`)} 
+              onClick={() => handleItemClick(item._id)} 
               className={styles.viewDetailsButton}
             >
               View Details

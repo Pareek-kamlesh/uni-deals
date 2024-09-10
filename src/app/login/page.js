@@ -24,7 +24,7 @@ export default function LoginPage() {
     } else {
       localStorage.removeItem('token');
       localStorage.removeItem('tokenExpiry');
-      showToast('info', 'Session expired. Please log in again.');
+      showToast('info', 'Please login!!');
     }
   }, [router]);
 
