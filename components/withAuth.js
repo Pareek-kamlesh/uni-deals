@@ -1,10 +1,11 @@
 // src/components/withAuth.js
+'use client';
 import { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import { useAuth } from '@/context/AuthContext';
+import { useAuth } from 'src/context/AuthContext';
 
 const withAuth = (WrappedComponent) => {
-  return (props) => {
+  const WithAuthComponent = (props) => {
     const { username } = useAuth();
     const router = useRouter();
 
@@ -20,6 +21,10 @@ const withAuth = (WrappedComponent) => {
 
     return <WrappedComponent {...props} />;
   };
+
+  WithAuthComponent.displayName = `WithAuth(${WrappedComponent.displayName || WrappedComponent.name || 'Component'})`;
+
+  return WithAuthComponent;
 };
 
 export default withAuth;

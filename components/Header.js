@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { useAuth } from '@/context/AuthContext';
+import { useAuth } from 'src/context/AuthContext';
 import styles from '../styles/Header.module.css';
 
 export default function Header() {

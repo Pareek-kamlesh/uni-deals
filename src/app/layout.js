@@ -1,7 +1,7 @@
 // src/app/layout.js
 import ClientLayout from '../../components/ClientLayout';
 import Header from '../../components/Header';
-import { AuthProvider } from '@/context/AuthContext'; // Import AuthProvider
+import { AuthProvider } from 'src/context/AuthContext'; // Import AuthProvider
 import '../../styles/globals.css';
 
 export const metadata = {

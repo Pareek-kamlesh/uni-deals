@@ -6,7 +6,7 @@ import { useRouter } from 'next/navigation';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { showToast } from '../../../lib/toast';  // Import the utility function
-import { useAuth } from '@/context/AuthContext'; // Import useAuth
+import { useAuth } from 'src/context/AuthContext';// Import useAuth
 
 export default function LoginPage() {
   const [email, setEmail] = useState('');
