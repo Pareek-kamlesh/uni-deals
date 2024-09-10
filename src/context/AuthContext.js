@@ -1,7 +1,6 @@
 // src/context/AuthContext.js
 'use client';
-
-import { createContext, useContext, useEffect, useState } from 'react';
+import { createContext, useContext, useState, useEffect } from 'react';
 
 const AuthContext = createContext();
 
@@ -10,20 +9,23 @@ export function AuthProvider({ children }) {
 
   const checkUserLogin = () => {
     const token = localStorage.getItem('token');
-
     if (token) {
+      // Fetch user data
       fetch('/api/auth?action=protected-route', {
         method: 'GET',
         headers: {
           Authorization: `Bearer ${token}`,
         },
       })
-        .then((res) => res.json())
+        .then((response) => response.json())
         .then((data) => {
-          setUsername(data.username || null);
+          if (data.username) {
+            setUsername(data.username);
+          } else {
+            setUsername(null);
+          }
         })
-        .catch((error) => {
-          console.error('Error fetching user data:', error);
+        .catch(() => {
           setUsername(null);
         });
     } else {
@@ -33,16 +35,6 @@ export function AuthProvider({ children }) {
 
   useEffect(() => {
     checkUserLogin();
-
-    const handleStorageChange = () => {
-      checkUserLogin();
-    };
-
-    window.addEventListener('storage', handleStorageChange);
-
-    return () => {
-      window.removeEventListener('storage', handleStorageChange);
-    };
   }, []);
 
   return (

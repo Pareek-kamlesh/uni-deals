@@ -1,3 +1,4 @@
+// src/pages/login.js
 'use client';
 import { useState, useEffect } from 'react';
 import styles from '../../../styles/LoginPage.module.css';
@@ -5,11 +6,13 @@ import { useRouter } from 'next/navigation';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { showToast } from '../../../lib/toast';  // Import the utility function
+import { useAuth } from '@/context/AuthContext'; // Import useAuth
 
 export default function LoginPage() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const router = useRouter();
+  const { checkUserLogin } = useAuth(); // Get checkUserLogin from context
 
   useEffect(() => {
     const token = localStorage.getItem('token');
@@ -41,6 +44,7 @@ export default function LoginPage() {
       localStorage.setItem('token', token);
       localStorage.setItem('tokenExpiry', expiryDate);
       showToast('success', 'Login successful! Redirecting...');
+      checkUserLogin(); // Update context
       setTimeout(() => {
         router.push('/');
       }, 2000);
@@ -48,6 +52,7 @@ export default function LoginPage() {
       showToast('error', 'Invalid credentials. Please try again.');
     }
   };
+
   return (
     <div className={styles.container}>
       <form onSubmit={handleSubmit} className={styles.form}>
