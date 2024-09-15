@@ -77,7 +77,26 @@ export default function ProfilePage() {
         ) : (
           items.map((item) => (
             <div key={item._id} className={styles.itemCard}>
-              <img src={item.image} alt={item.itemName} className={styles.itemImage} />
+              <div className={styles.imageContainer}>
+                <img
+                  src={item.image}
+                  alt={item.itemName}
+                  className={styles.itemImage}
+                  onError={(e) => {
+                    e.target.style.display = 'none'; // Hide broken image
+                    const errorMessage = document.createElement('div');
+                    errorMessage.className = styles.imageErrorMessage;
+                    errorMessage.innerHTML = `
+                      <div style="text-align: center;">
+                        <img src="/uploads/error-icon.png" alt="Error" style="width: 30px;" />
+                        <p>Please click here to see the image</p>
+                      </div>
+                    `;
+                    errorMessage.onclick = () => window.open(item.image, '_blank');
+                    e.target.parentNode.appendChild(errorMessage); // Append error message in the same container
+                  }}
+                />
+              </div>
               <div className={styles.itemDetails}>
                 <h3 className={styles.itemName}>{item.itemName}</h3>
                 <p className={styles.itemDescription}>{item.description}</p>

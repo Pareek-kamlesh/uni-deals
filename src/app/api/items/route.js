@@ -1,4 +1,3 @@
-// api/items/route.js
 import connectToDatabase from '../../../../lib/mongoose';
 import Item from '../../../../models/Item';
 import { verifyToken } from '../../../../lib/auth';
@@ -28,6 +27,15 @@ export async function POST(req) {
 
   const { itemName, description, price, image, sellerPhoneNumber } = await req.json();
 
+  // Convert Google Drive link to direct link if necessary
+  const directImageLink = image.includes('drive.google.com') 
+  ? image.replace('/file/d/', '/uc?export=view&id=').replace('/view', '').replace('?usp=sharing', '')
+  : image;
+
+
+  console.log('Original Image URL:', image);
+  console.log('Direct Image URL:', directImageLink);
+
   await connectToDatabase();
 
   try {
@@ -35,10 +43,12 @@ export async function POST(req) {
       itemName,
       description,
       price,
-      image,
+      image: directImageLink,
       sellerPhoneNumber,
       postedBy: verifiedUser.userId,
     });
+
+    console.log('New Item Created:', newItem);
 
     return new Response(JSON.stringify(newItem), { status: 201 });
   } catch (error) {
