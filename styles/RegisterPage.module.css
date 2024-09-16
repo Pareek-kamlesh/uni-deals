@@ -69,3 +69,19 @@
   transform: scale(0.98);
   box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
 }
+
+.loginLink {
+  margin-top: 20px;
+  text-align: center;
+  font-size: 1rem;
+  padding-top: 10px; /* Add padding for spacing */
+}
+
+.loginLink a {
+  color: #164e3b;
+  text-decoration: none;
+}
+
+.loginLink a:hover {
+  text-decoration: underline;
+}

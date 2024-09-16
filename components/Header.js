@@ -79,7 +79,7 @@ export default function Header() {
             <li className={styles.navItem}>
               <Link href="/login" className={styles.navLink}>Login</Link>
             </li>
-            <li className={styles.navItem}>
+            <li className={`${styles.navItem} ${styles.register}`}>
               <Link href="/register" className={styles.navLink}>Register</Link>
             </li>
           </ul>

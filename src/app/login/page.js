@@ -1,12 +1,13 @@
 // src/pages/login.js
 'use client';
 import { useState, useEffect } from 'react';
+import Link from 'next/link'; // Import Link from next/link
 import styles from '../../../styles/LoginPage.module.css';
 import { useRouter } from 'next/navigation';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { showToast } from '../../../lib/toast';  // Import the utility function
-import { useAuth } from 'src/context/AuthContext';// Import useAuth
+import { useAuth } from 'src/context/AuthContext'; // Import useAuth
 
 export default function LoginPage() {
   const [email, setEmail] = useState('');
@@ -73,7 +74,11 @@ export default function LoginPage() {
           required
         />
         <button className={styles.button} type="submit">Login</button>
+        <div className={styles.registerLink}>
+          Not registered already? <Link href="/register">Click here!</Link>
+        </div>
       </form>
+      
       {/* Toast Container */}
       <ToastContainer />
     </div>

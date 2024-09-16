@@ -98,15 +98,25 @@
 .menuLink:hover {
   background: #555;
 }
-
 @media (max-width: 768px) {
   .navList {
-    justify-content: space-around;
+    flex-direction: row; /* Ensure items are in a single row */
+    flex-wrap: nowrap; /* Prevent items from wrapping to the next line */
+    justify-content: space-around; /* Distribute items evenly */
+    width: 100%; /* Full width */
+  }
+  .navItem {
+    margin-right: 0; /* Remove right margin */
+    margin-bottom: 0; /* Remove bottom margin */
   }
   .header {
-    height: 70px;
+    height: auto; /* Adjust height to fit content */
+    padding: 10px; /* Add padding for spacing */
   }
-  .menu{
+  .menu {
     right: 0;
+  }
+  .navItem.register {
+    display: none; /* Hide the register link */
   }
 }

@@ -5,6 +5,7 @@ import styles from '../../../styles/RegisterPage.module.css'; // Import CSS modu
 import { ToastContainer } from 'react-toastify'; // Import ToastContainer
 import 'react-toastify/dist/ReactToastify.css'; // Import Toastify CSS
 import { showToast } from '../../../lib/toast'; // Import the utility function
+import Link from 'next/link';
 
 export default function RegisterPage() {
   const [email, setEmail] = useState('');
@@ -81,6 +82,9 @@ export default function RegisterPage() {
           required
         />
         <button className={styles.button} type="submit">Register</button>
+        <div className={styles.loginLink}>
+          Already have an account? <Link href="/login">Click here!</Link>
+        </div>
       </form>
       {/* Toast Container */}
       <ToastContainer />
