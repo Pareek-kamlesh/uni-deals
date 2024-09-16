@@ -1,0 +1,39 @@
+/* styles/About.module.css */
+.container {
+    padding: 20px;
+    max-width: 800px;
+    margin: 100px auto 0; /* Adjust for header height */
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .h1 {
+    font-size: 2.5em;
+    margin-bottom: 20px;
+    color: #333;
+    text-align: center;
+  }
+  
+  .h2 {
+    font-size: 2em;
+    margin-top: 20px;
+    color: #555;
+  }
+  
+  .p {
+    font-size: 1.2em;
+    line-height: 1.6;
+    margin-bottom: 20px;
+    color: #666;
+  }
+  
+  .link {
+    color: #0070f3;
+    text-decoration: none;
+  }
+  
+  .link:hover {
+    text-decoration: underline;
+  }

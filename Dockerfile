@@ -1,5 +1,5 @@
-# Use the official Node.js image as the base image
-FROM node:18-alpine
+# Use the official Node.js 18 image as the base image
+FROM node:18
 
 # Set the working directory
 WORKDIR /app
@@ -9,9 +9,6 @@ COPY package*.json ./
 
 # Install dependencies
 RUN npm install
-
-# Rebuild native modules
-RUN npm rebuild bcrypt --build-from-source
 
 # Copy the rest of the application code
 COPY . .

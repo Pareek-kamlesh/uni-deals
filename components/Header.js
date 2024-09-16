@@ -1,9 +1,9 @@
-// src/components/Header.js
-'use client';
+// components/Header.js
+"use client";
 import { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { useAuth } from 'src/context/AuthContext';
+import { useAuth } from '../src/context/AuthContext';
 import styles from '../styles/Header.module.css';
 
 export default function Header() {
@@ -57,30 +57,33 @@ export default function Header() {
               Uni-Deals
             </Link>
           </li>
-          {username ? (
-            <li className={styles.navItem}>
-              <div className={`${styles.usernameMenu} ${menuOpen ? 'open' : ''}`} ref={menuRef}>
-                <span className={styles.usernameButton} onClick={toggleMenu}>
-                  {username[0]}
-                </span>
-                <div className={`${styles.menu} ${menuOpen ? styles.menuOpen : ''}`}>
-                  <Link href="/profile" className={styles.menuLink} onClick={handleMenuClick}>Profile</Link>
-                  <Link href="/change-password" className={styles.menuLink} onClick={handleMenuClick}>Change Password</Link>
-                  <a href="/logout" className={styles.menuLink} onClick={handleMenuClick}>Logout</a>
-                </div>
-              </div>
-            </li>
-          ) : (
-            <>
-              <li className={styles.navItem}>
-                <Link href="/login" className={styles.navLink}>Login</Link>
-              </li>
-              <li className={styles.navItem}>
-                <Link href="/register" className={styles.navLink}>Register</Link>
-              </li>
-            </>
-          )}
+          <li className={styles.navItem}>
+            <Link href="/about" className={styles.navLink}>
+              About
+            </Link>
+          </li>
         </ul>
+        {username ? (
+          <div className={`${styles.usernameMenu} ${menuOpen ? 'open' : ''}`} ref={menuRef}>
+            <span className={styles.usernameButton} onClick={toggleMenu}>
+              {username[0]}
+            </span>
+            <div className={`${styles.menu} ${menuOpen ? styles.menuOpen : ''}`}>
+              <Link href="/profile" className={styles.menuLink} onClick={handleMenuClick}>Profile</Link>
+              <Link href="/change-password" className={styles.menuLink} onClick={handleMenuClick}>Change Password</Link>
+              <a href="/logout" className={styles.menuLink} onClick={handleMenuClick}>Logout</a>
+            </div>
+          </div>
+        ) : (
+          <ul className={styles.navList}>
+            <li className={styles.navItem}>
+              <Link href="/login" className={styles.navLink}>Login</Link>
+            </li>
+            <li className={styles.navItem}>
+              <Link href="/register" className={styles.navLink}>Register</Link>
+            </li>
+          </ul>
+        )}
       </nav>
     </header>
   );

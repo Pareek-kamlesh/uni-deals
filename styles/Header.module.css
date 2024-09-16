@@ -13,23 +13,30 @@
   left: 0; /* Aligns the header to the left of the viewport */
   z-index: 1000; /* Ensures the header is above other content */
   height: 60px; /* Define a fixed height for the header */
+  display: flex;
+  align-items: center; /* Vertically center the content */
 }
 
 .nav {
   max-width: 1200px;
   margin: 0 auto;
   padding: 0 20px;
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
 }
 
 .navList {
   list-style: none;
   display: flex;
-  justify-content: space-between;
-  align-items: center;
+  align-items: center; /* Vertically center the links */
+  margin: 0;
+  padding: 0;
 }
 
 .navItem {
   position: relative;
+  margin-right: 20px; /* Add space between items */
 }
 
 .navLink {
@@ -51,11 +58,13 @@
   border: none;
   color: white;
   font-size: 1.2rem;
-  margin-right: 20px;
   cursor: pointer;
   padding: 10px 15px;
   border-radius: 50%;
   transition: background 0.3s;
+  display: flex;
+  align-items: center; /* Vertically center the button content */
+  justify-content: center; /* Horizontally center the button content */
 }
 
 .usernameButton:hover {
@@ -67,8 +76,7 @@
   display: none; /* Hide menu by default */
   position: absolute;
   top: 100%; /* Below the button */
-  left: 0;
-  right: auto;
+  right: 100px; /* Align to the right */
   background: #444;
   border-radius: 5px;
   padding: 10px;
@@ -92,13 +100,13 @@
 }
 
 @media (max-width: 768px) {
-  .usernameButton {
-    margin-left: 90px; /* Adjust this value as needed to move the button */
-  }
   .navList {
     justify-content: space-around;
   }
   .header {
     height: 70px;
+  }
+  .menu{
+    right: 0;
   }
 }
