@@ -66,7 +66,7 @@ export default function Header() {
         {username ? (
           <div className={`${styles.usernameMenu} ${menuOpen ? 'open' : ''}`} ref={menuRef}>
             <span className={styles.usernameButton} onClick={toggleMenu}>
-              {username[0]}
+              {username[0].toUpperCase()}
             </span>
             <div className={`${styles.menu} ${menuOpen ? styles.menuOpen : ''}`}>
               <Link href="/profile" className={styles.menuLink} onClick={handleMenuClick}>Profile</Link>

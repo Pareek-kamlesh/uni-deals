@@ -12,12 +12,22 @@ const formatDate = (dateString) => {
 
 export default function ItemsPage({ searchQuery }) {
   const [items, setItems] = useState([]);
+  const [filter, setFilter] = useState('global');
+  const [cities, setCities] = useState([]);
+  const [colleges, setColleges] = useState([]);
+  const [filteredColleges, setFilteredColleges] = useState([]);
+  const [selectedCity, setSelectedCity] = useState('');
+  const [selectedCollege, setSelectedCollege] = useState('');
   const router = useRouter();
   const containerRef = useRef(null); // Create a ref for the container
 
   useEffect(() => {
     async function fetchItems() {
-      const res = await fetch('/api/items');
+      let url = '/api/items';
+      if (selectedCity) url += `?city=${selectedCity}`;
+      if (selectedCollege) url += `&college=${selectedCollege}`;
+
+      const res = await fetch(url);
       if (res.ok) {
         const data = await res.json();
         setItems(data);
@@ -33,7 +43,34 @@ export default function ItemsPage({ searchQuery }) {
     if (savedScrollPosition) {
       containerRef.current.scrollTo(0, parseInt(savedScrollPosition, 10));
     }
+  }, [selectedCity, selectedCollege]);
+
+  useEffect(() => {
+    async function fetchCitiesAndColleges() {
+      const res = await fetch('/api/user-data'); // Fetch user data from the new API route
+      if (res.ok) {
+        const data = await res.json();
+        setCities([...new Set(data.map(user => user.city))]);
+        setColleges(data);
+      } else {
+        console.error('Failed to fetch cities and colleges');
+      }
+    }
+
+    fetchCitiesAndColleges();
   }, []);
+
+  useEffect(() => {
+    if (selectedCity) {
+      const filtered = colleges
+        .filter(college => college.city === selectedCity)
+        .map(college => college.college);
+      setFilteredColleges([...new Set(filtered)]); // Remove duplicates
+      setSelectedCollege(''); // Reset selected college when city changes
+    } else {
+      setFilteredColleges([]);
+    }
+  }, [selectedCity, colleges]);
 
   const handleItemClick = (itemId) => {
     // Save scroll position
@@ -48,6 +85,68 @@ export default function ItemsPage({ searchQuery }) {
 
   return (
     <div className={styles.container} ref={containerRef}>
+      <div className={styles.filters}>
+        <label className={styles.filterLabel}>
+          <input
+            type="radio"
+            value="global"
+            checked={filter === 'global'}
+            onChange={() => {
+              setFilter('global');
+              setSelectedCity('');
+              setSelectedCollege('');
+            }}
+            className={styles.filterInput}
+          />
+          Global
+        </label>
+        <label className={styles.filterLabel}>
+          <input
+            type="radio"
+            value="city"
+            checked={filter === 'city'}
+            onChange={() => setFilter('city')}
+            className={styles.filterInput}
+          />
+          City
+        </label>
+        {filter === 'city' && (
+          <select
+            onChange={(e) => setSelectedCity(e.target.value)}
+            value={selectedCity}
+            className={styles.filterSelect}
+          >
+            <option value="">Select City</option>
+            {cities.map(city => (
+              <option key={city} value={city}>{city}</option>
+            ))}
+          </select>
+        )}
+        {selectedCity && (
+          <label className={styles.filterLabel}>
+            <input
+              type="radio"
+              value="college"
+              checked={filter === 'college'}
+              onChange={() => setFilter('college')}
+              className={styles.filterInput}
+            />
+            College
+          </label>
+        )}
+        {filter === 'college' && selectedCity && (
+          <select
+            onChange={(e) => setSelectedCollege(e.target.value)}
+            value={selectedCollege}
+            className={styles.filterSelect}
+          >
+            <option value="">Select College</option>
+            {filteredColleges.map(college => (
+              <option key={college} value={college}>{college}</option>
+            ))}
+          </select>
+        )}
+      </div>
       <div className={styles.itemGrid}>
         {filteredItems.map(item => (
           <div key={item._id} className={styles.itemCard}>

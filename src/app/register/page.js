@@ -12,6 +12,8 @@ export default function RegisterPage() {
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [username, setUsername] = useState('');
+  const [city, setCity] = useState('');
+  const [college, setCollege] = useState('');
   const router = useRouter();
 
   useEffect(() => {
@@ -33,7 +35,7 @@ export default function RegisterPage() {
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ email, password, username }),
+      body: JSON.stringify({ email, password, username, city, college }),
     });
 
     if (res.ok) {
@@ -80,6 +82,22 @@ export default function RegisterPage() {
           className={styles.input}
           onChange={(e) => setConfirmPassword(e.target.value)}
           required
+        />
+        <input
+          type="text"
+          placeholder="City"
+          value={city}
+          onChange={(e) => setCity(e.target.value)}
+          required
+          className={styles.input}
+        />
+        <input
+          type="text"
+          placeholder="College"
+          value={college}
+          onChange={(e) => setCollege(e.target.value)}
+          required
+          className={styles.input}
         />
         <button className={styles.button} type="submit">Register</button>
         <div className={styles.loginLink}>

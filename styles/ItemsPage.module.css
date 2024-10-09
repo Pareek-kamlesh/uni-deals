@@ -13,6 +13,57 @@
   align-items: center; 
 }
 
+.filters {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+  align-items: center;
+  flex-wrap: wrap; /* Allow wrapping of filter buttons */
+  justify-content: center; /* Center align filters */
+}
+
+.filterLabel {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 1rem;
+  color: #333;
+  background-color: #f9f9f9; /* Light background */
+  padding: 10px 15px; /* Add padding */
+  border-radius: 5px; /* Rounded corners */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+  transition: background-color 0.3s ease, box-shadow 0.3s ease; /* Smooth transition */
+  cursor: pointer; /* Pointer cursor */
+}
+
+.filterLabel:hover {
+  background-color: #e0e0e0; /* Slightly darker background on hover */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Deeper shadow on hover */
+}
+
+.filterInput {
+  margin-right: 5px;
+}
+
+.filterSelect {
+  padding: 10px 15px;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #fff;
+  color: #333;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease; /* Smooth transition */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+}
+
+.filterSelect:focus {
+  border-color: #00a025;
+  outline: none;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Deeper shadow on focus */
+}
+
+
+
 .itemGrid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -125,6 +176,18 @@
     width: 100%; /* Use full width on mobile */
     background-color: whitesmoke;
     justify-content: flex-start; /* Ensure content is aligned to the top */
+  }
+}
+@media (max-width: 768px) {
+  .filters {
+    flex-direction: column; /* Stack filters vertically on smaller screens */
+    align-items: flex-start; /* Align filters to the start */
+  }
+  .filterLabel {
+    width: 100%; /* Make filter labels take full width */
+  }
+  .filterSelect {
+    width: 100%; /* Make filter selects take full width */
   }
 }
 

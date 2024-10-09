@@ -1,12 +1,29 @@
 import connectToDatabase from '../../../../lib/mongoose';
 import Item from '../../../../models/Item';
+import User from '../../../../models/User'; // Ensure the User model is imported
 import { verifyToken } from '../../../../lib/auth';
 
 export async function GET(req) {
   await connectToDatabase();
 
+  const url = new URL(req.url, `http://${req.headers.host}`);
+  const city = url.searchParams.get('city');
+  const college = url.searchParams.get('college');
+
   try {
-    const items = await Item.find();
+    let query = {};
+
+    if (city || college) {
+      const users = await User.find({
+        ...(city && { city }),
+        ...(college && { college }),
+      }).select('_id');
+
+      const userIds = users.map(user => user._id);
+      query.postedBy = { $in: userIds };
+    }
+
+    const items = await Item.find(query);
     return new Response(JSON.stringify(items), { status: 200 });
   } catch (error) {
     console.error("Error fetching items:", error.message);
@@ -28,10 +45,9 @@ export async function POST(req) {
   const { itemName, description, price, image, sellerPhoneNumber } = await req.json();
 
   // Convert Google Drive link to direct link if necessary
-  const directImageLink = image.includes('drive.google.com') 
-  ? image.replace('/file/d/', '/uc?export=view&id=').replace('/view', '').replace('?usp=sharing', '')
-  : image;
-
+  const directImageLink = image.includes('drive.google') 
+    ? image.replace('/file/d/', '/uc?export=view&id=').replace('/view', '').replace('?usp=sharing', '')
+    : image;
 
   console.log('Original Image URL:', image);
   console.log('Direct Image URL:', directImageLink);

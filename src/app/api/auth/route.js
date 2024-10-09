@@ -12,7 +12,7 @@ export async function POST(req) {
 
   try {
     if (action === 'register') {
-      const { email, password, username } = await req.json();
+      const { email, password, username, city, college } = await req.json();
 
       // Check if user already exists
       if (await User.findOne({ email })) {
@@ -21,10 +21,26 @@ export async function POST(req) {
 
       // Hash the password and create a new user
       const hashedPassword = await bcrypt.hash(password, 10);
-      const newUser = new User({ email, password: hashedPassword, username });
+      const newUser = new User({ email, password: hashedPassword, username, city, college });
       await newUser.save();
 
-      return new Response(JSON.stringify({ message: 'User registered successfully' }), { status: 201 });
+      // Construct the response object, including city and college explicitly
+      return new Response(JSON.stringify({
+        message: 'User registered successfully',
+        user: {
+          email: newUser.email,
+          username: newUser.username,
+          city: newUser.city,          // Include city
+          college: newUser.college,    // Include college
+          _id: newUser._id
+        }
+      }), { status: 201 });
+    
+
+    
+      
+      
+
     }
 
     if (action === 'login') {
