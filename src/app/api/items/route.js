@@ -15,8 +15,8 @@ export async function GET(req) {
 
     if (city || college) {
       const users = await User.find({
-        ...(city && { city }),
-        ...(college && { college }),
+        ...(city && { city: { $regex: new RegExp(`^${city}$`, 'i') } }), // Handle case sensitivity for city
+        ...(college && { college: { $regex: new RegExp(`^${college}$`, 'i') } }), // Handle case sensitivity for college
       }).select('_id');
 
       const userIds = users.map(user => user._id);

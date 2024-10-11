@@ -23,10 +23,9 @@ export default function ItemsPage({ searchQuery }) {
 
   useEffect(() => {
     async function fetchItems() {
-      let url = '/api/items';
-      if (selectedCity) url += `?city=${selectedCity}`;
-      if (selectedCollege) url += `&college=${selectedCollege}`;
-
+      let url = `/api/items?city=${selectedCity.trim()}`;
+      if (selectedCollege) url += `&college=${selectedCollege.trim()}`;
+  
       const res = await fetch(url);
       if (res.ok) {
         const data = await res.json();
@@ -35,30 +34,32 @@ export default function ItemsPage({ searchQuery }) {
         console.error('Failed to fetch items');
       }
     }
-
+  
     fetchItems();
-
-    // Restore scroll position
-    const savedScrollPosition = sessionStorage.getItem('scrollPosition');
-    if (savedScrollPosition) {
-      containerRef.current.scrollTo(0, parseInt(savedScrollPosition, 10));
-    }
   }, [selectedCity, selectedCollege]);
+  
 
   useEffect(() => {
     async function fetchCitiesAndColleges() {
-      const res = await fetch('/api/user-data'); // Fetch user data from the new API route
+      const res = await fetch('/api/user-data'); // Fetch user data from the API
       if (res.ok) {
         const data = await res.json();
-        setCities([...new Set(data.map(user => user.city))]);
-        setColleges(data);
+  
+        // Normalize city names (capitalize first letter, rest lowercase) and remove duplicates
+        const normalizedCities = [...new Set(
+          data.map(user => user.city.trim().toLowerCase()) // Lowercase for comparison
+        )].map(city => city.charAt(0).toUpperCase() + city.slice(1)); // Capitalize after deduplication
+  
+        setCities(normalizedCities);
+        setColleges(data); // Store college data as is
       } else {
         console.error('Failed to fetch cities and colleges');
       }
     }
-
+  
     fetchCitiesAndColleges();
   }, []);
+  
 
   useEffect(() => {
     if (selectedCity) {

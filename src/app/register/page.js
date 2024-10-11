@@ -30,12 +30,17 @@ export default function RegisterPage() {
       showToast('error', 'Passwords do not match');  // Show toast for mismatched passwords
       return;
     }
+
+    // Normalize city and college names
+    const normalizedCity = city.trim().charAt(0).toUpperCase() + city.trim().slice(1).toLowerCase();
+    const normalizedCollege = college.trim().toUpperCase();
+
     const res = await fetch('/api/auth?action=register', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ email, password, username, city, college }),
+      body: JSON.stringify({ email, password, username, city: normalizedCity, college: normalizedCollege }),
     });
 
     if (res.ok) {
