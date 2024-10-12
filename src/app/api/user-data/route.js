@@ -1,28 +1,20 @@
 import connectToDatabase from '../../../../lib/mongoose';
 import User from '../../../../models/User';
+import { NextApiRequest, NextApiResponse } from 'next';
 
-export async function GET(req) {
+export async function GET(req, res) {
   await connectToDatabase();
 
   try {
     const users = await User.find().select('city college');
     
-    // Add Cache-Control header to prevent caching in Vercel
-    return new Response(JSON.stringify(users), {
-      status: 200,
-      headers: {
-        'Cache-Control': 'no-store, max-age=0', // Disable caching
-      },
-      revalidate: 0, // Ensure the response is not cached
-    });
+    // Set Cache-Control header to disable caching for this API route
+    res.setHeader('Cache-Control', 'no-store, max-age=0');
+    
+    // Return the response
+    return res.status(200).json(users);
   } catch (error) {
     console.error("Error fetching user data:", error.message);
-    return new Response(JSON.stringify({ message: 'Error fetching user data', error: error.message }), {
-      status: 500,
-      headers: {
-        'Cache-Control': 'no-store, max-age=0', // Disable caching on error as well
-      },
-      revalidate: 0, // Ensure the response is not cached
-    });
+    return res.status(500).json({ message: 'Error fetching user data', error: error.message });
   }
 }
