@@ -13,6 +13,7 @@ export async function GET(req) {
       headers: {
         'Cache-Control': 'no-store, max-age=0', // Disable caching
       },
+      revalidate: 0, // Ensure the response is not cached
     });
   } catch (error) {
     console.error("Error fetching user data:", error.message);
@@ -21,6 +22,7 @@ export async function GET(req) {
       headers: {
         'Cache-Control': 'no-store, max-age=0', // Disable caching on error as well
       },
+      revalidate: 0, // Ensure the response is not cached
     });
   }
 }
