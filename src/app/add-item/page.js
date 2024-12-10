@@ -1,49 +1,108 @@
-// src/app/add-item/page.js
 'use client';
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import styles from '../../../styles/AddItem.module.css';
-import { ToastContainer } from 'react-toastify'; // Import ToastContainer
-import 'react-toastify/dist/ReactToastify.css'; // Import Toastify CSS
-import { showToast } from '../../../lib/toast'; // Import the utility function
-import withAuth from '../../../components/withAuth'; // Import withAuth
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { showToast } from '../../../lib/toast';
+import withAuth from '../../../components/withAuth';
 
 function AddItem() {
   const [itemName, setItemName] = useState('');
   const [description, setDescription] = useState('');
   const [price, setPrice] = useState('');
-  const [image, setImage] = useState('');
+  const [imageFile, setImageFile] = useState(null);
   const [sellerPhoneNumber, setSellerPhoneNumber] = useState('');
   const router = useRouter();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+  
     const token = localStorage.getItem('token');
     if (!token) {
       showToast('error', 'You must be logged in to add an item.');
       return;
     }
-
+  
+    let uploadedImageUrl = '';
+    if (imageFile) {
+      try {
+        // Get the signature and other Cloudinary parameters from the backend
+        const signatureRes = await fetch('/api/upload-signature', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ folder: 'items' }),
+        });
+  
+        if (!signatureRes.ok) {
+          throw new Error('Failed to get signature from backend');
+        }
+  
+        const { signature, timestamp, folder, cloud_name, api_key } = await signatureRes.json();
+  
+        // Upload the image to Cloudinary
+        const formData = new FormData();
+        formData.append('file', imageFile);
+        formData.append('timestamp', timestamp);
+        formData.append('signature', signature);
+        formData.append('folder', folder);
+        formData.append('api_key', api_key);
+  
+        const cloudinaryRes = await fetch(
+          `https://api.cloudinary.com/v1_1/${cloud_name}/image/upload`,
+          {
+            method: 'POST',
+            body: formData,
+          }
+        );
+  
+        const cloudinaryData = await cloudinaryRes.json();
+        if (cloudinaryData.secure_url) {
+          uploadedImageUrl = cloudinaryData.secure_url;
+        } else {
+          throw new Error(cloudinaryData.error?.message || 'Image upload failed');
+        }
+      } catch (error) {
+        console.error('Image Upload Error:', error.message);
+        showToast('error', 'Image upload failed. Please try again.');
+        return;
+      }
+    }
+  
+    // Send item details to your backend
     const res = await fetch('/api/items', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${token}`,
+        Authorization: `Bearer ${token}`,
       },
-      body: JSON.stringify({ itemName, description, price, image, sellerPhoneNumber }),
+      body: JSON.stringify({
+        itemName,
+        description,
+        price,
+        image: uploadedImageUrl,
+        sellerPhoneNumber,
+      }),
     });
-
+  
     if (res.ok) {
-      showToast('success', 'Adding Item...!');
+      showToast('success', 'Item added successfully!');
       setTimeout(() => {
         router.push('/profile');
       }, 2000);
     } else {
-      showToast('error', 'Failed to add item. Please try again.');
+      const errorData = await res.json();
+      showToast('error', errorData.message || 'Failed to add item. Please try again.');
     }
   };
+  
+  
+
+  
+  
+  
+  
 
   return (
     <div className={styles.container}>
@@ -79,24 +138,19 @@ function AddItem() {
           />
         </label>
         <label className={styles.label}>
-          <span className={styles.labelText}>
-            Image URL:(Please first upload your image to your drive so that you can paste the url of it)
-          </span>
+          <span className={styles.labelText}>Image:</span>
           <input
-            type="text"
-            value={image}
-            onChange={(e) => setImage(e.target.value)}
+            type="file"
+            accept="image/*"
+            onChange={(e) => setImageFile(e.target.files[0])}
             required
             className={styles.input}
           />
         </label>
         <label className={styles.label}>
-          <span className={styles.labelText}>
-            Phone Number:(Phone Number with country code....eg.(+91987654321))
-          </span>
+          <span className={styles.labelText}>Phone Number:</span>
           <input
             type="text"
-            placeholder="Your phone number"
             value={sellerPhoneNumber}
             onChange={(e) => setSellerPhoneNumber(e.target.value)}
             required
@@ -107,7 +161,6 @@ function AddItem() {
           Add Item
         </button>
       </form>
-      {/* Toast Container */}
       <ToastContainer />
     </div>
   );

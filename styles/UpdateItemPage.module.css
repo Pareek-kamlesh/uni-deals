@@ -37,6 +37,15 @@
   border-color: #3498db;
   outline: none;
 }
+.imagePreview {
+  max-width: 300px; 
+  max-height: 300px;
+  object-fit: cover; 
+  margin: 10px 0; 
+  border: 1px solid #ccc; 
+  border-radius: 8px; 
+}
+
 
 /* Textarea field specific styling */
 .textareaField {
