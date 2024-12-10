@@ -148,7 +148,7 @@ function AddItem() {
           />
         </label>
         <label className={styles.label}>
-          <span className={styles.labelText}>Phone Number:</span>
+          <span className={styles.labelText}>Phone Number: (Use country code: example +91987654321)</span>
           <input
             type="text"
             value={sellerPhoneNumber}

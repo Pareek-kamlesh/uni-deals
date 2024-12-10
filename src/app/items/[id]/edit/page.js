@@ -133,6 +133,7 @@ export default function EditItemPage() {
     <div className={styles.container}>
       <h2 className={styles.head}>Edit Item</h2>
       <form onSubmit={handleUpdateSubmit}>
+      <span>Item Name</span>
         <input 
           type="text" 
           placeholder="Item Name" 
@@ -141,6 +142,7 @@ export default function EditItemPage() {
           required 
           className={styles.inputField}
         />
+        <span>Description</span>
         <textarea 
           placeholder="Description" 
           value={description} 
@@ -148,6 +150,7 @@ export default function EditItemPage() {
           required 
           className={styles.textareaField}
         />
+        <span>Price</span>
         <input 
           type="number" 
           placeholder="Price" 
@@ -166,6 +169,7 @@ export default function EditItemPage() {
             className={styles.inputField}
           />
         </div>
+        Phone Number: (Use country code: example +91987654321)
         <input 
           type="text" 
           placeholder="Seller Phone Number" 
